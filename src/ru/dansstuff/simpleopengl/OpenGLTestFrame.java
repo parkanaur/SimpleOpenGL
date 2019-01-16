@@ -1,7 +1,7 @@
 package ru.dansstuff.simpleopengl;
 
-import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.Animator;
+import ru.dansstuff.simpleopengl.drawers.ISceneViewer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +14,7 @@ public class OpenGLTestFrame
     private int height;
 
     private GLCanvasWrapper canvasWrapper;
+    private Point curPos;
 
     public int getWidth()  { return width; }
     public int getHeight() { return height; }
@@ -23,6 +24,7 @@ public class OpenGLTestFrame
         this.height = height;
         setResizable(true);
         bindCanvas();
+        curPos = new Point(-1, 1);
         initWindow(width, height);
         bindControls();
         Animator animator = new Animator(canvasWrapper.getGlCanvas());
@@ -104,19 +106,25 @@ public class OpenGLTestFrame
                 switch (key) {
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
-                        canvasWrapper.getDrawer().moveForward(1);
+                        canvasWrapper.getDrawer().moveForward(0.1f);
                         break;
                     case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
-                        canvasWrapper.getDrawer().moveBackward(1);
+                        canvasWrapper.getDrawer().moveBackward(0.1f);
                         break;
                     case KeyEvent.VK_A:
                     case KeyEvent.VK_LEFT:
-                        canvasWrapper.getDrawer().moveLeft(1);
+                        canvasWrapper.getDrawer().moveLeft(0.1f);
                         break;
                     case KeyEvent.VK_D:
                     case KeyEvent.VK_RIGHT:
-                        canvasWrapper.getDrawer().moveRight(1);
+                        canvasWrapper.getDrawer().moveRight(0.1f);
+                        break;
+                    case KeyEvent.VK_SHIFT:
+                        canvasWrapper.getDrawer().moveUp(0.1f);
+                        break;
+                    case KeyEvent.VK_CONTROL:
+                        canvasWrapper.getDrawer().moveDown(0.1f);
                         break;
                 }
             }
@@ -126,12 +134,48 @@ public class OpenGLTestFrame
 
             }
         });
+        canvasWrapper.getGlCanvas().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                curPos.x = -1;
+                curPos.y = -1;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                curPos.x = -1;
+                curPos.y = -1;
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         canvasWrapper.getGlCanvas().addMouseMotionListener(new MouseMotionListener() {
-            int lastX = -1;
-            int lastY = -1;
             @Override
             public void mouseDragged(MouseEvent e) {
-
+                ISceneViewer drawer = canvasWrapper.getDrawer();
+                if (e.getX() != curPos.x) {
+                    if (curPos.x != -1)
+                        drawer.rotLeft((e.getX() - curPos.x) * 0.1f);
+                }
+                if (e.getY() != curPos.y) {
+                    if (curPos.y != -1)
+                        drawer.rotUp((e.getY() - curPos.y) * 0.1f);
+                }
+                curPos.x = e.getX();
+                curPos.y = e.getY();
             }
 
             @Override
