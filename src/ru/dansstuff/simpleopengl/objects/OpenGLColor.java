@@ -1,4 +1,4 @@
-package ru.dansstuff.simpleopengl.primitives;
+package ru.dansstuff.simpleopengl.objects;
 
 import java.util.Random;
 

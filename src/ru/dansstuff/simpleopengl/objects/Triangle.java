@@ -1,4 +1,4 @@
-package ru.dansstuff.simpleopengl.primitives;
+package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
 
@@ -6,7 +6,7 @@ public class Triangle<T extends Number> implements Primitive {
     public final T x1, x2, x3, y1, y2, y3, z1, z2, z3;
     private final OpenGLColor color;
 
-    public Triangle(T x1, T y1, T x2, T y2, T x3, T y3, T z1, T z2, T z3, OpenGLColor color) {
+    public Triangle(T x1, T y1, T z1, T x2, T y2, T z2, T x3, T y3, T z3, OpenGLColor color) {
         this.x1 = x1;
         this.x2 = x2;
         this.x3 = x3;

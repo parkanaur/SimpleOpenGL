@@ -2,6 +2,6 @@ package ru.dansstuff.simpleopengl;
 
 public class Main {
     public static void main(String[] args) {
-        new OpenGLTestFrame(800, 600);
+        new OpenGLTestFrame(1600, 900);
     }
 }

@@ -33,13 +33,13 @@ public class OpenGLTestFrame
 
     private void bindControls() {
         Panel controlsPanel = new Panel();
-        controlsPanel.setLayout(new GridLayout(3, 2));
+        controlsPanel.setLayout(new GridLayout(3, 1));
 
         Button triangleAddBtn = new Button("Add random triangle");
         triangleAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().drawRandomTriangle();
+                canvasWrapper.getDrawer().addRandomTriangle();
             }
         });
         controlsPanel.add(triangleAddBtn, BorderLayout.EAST);
@@ -48,28 +48,10 @@ public class OpenGLTestFrame
         lineAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().drawRandomLine();
+                canvasWrapper.getDrawer().addRandomLine();
             }
         });
         controlsPanel.add(lineAddBtn, BorderLayout.EAST);
-
-        Button rotLeftBtn = new Button("Rotate <-");
-        rotLeftBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().rotLeft(1f);
-            }
-        });
-        controlsPanel.add(rotLeftBtn, BorderLayout.EAST);
-
-        Button rotRightBtn = new Button("Rotate ->");
-        rotRightBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().rotRight(1f);
-            }
-        });
-        controlsPanel.add(rotRightBtn, BorderLayout.EAST);
 
         Button clearBtn = new Button("Clear");
         clearBtn.addActionListener(new ActionListener() {

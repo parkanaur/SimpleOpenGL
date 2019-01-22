@@ -1,4 +1,4 @@
-package ru.dansstuff.simpleopengl.primitives;
+package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
 
