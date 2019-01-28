@@ -11,6 +11,7 @@ public interface ISceneViewer extends GLEventListener {
     void addRandomLine();
     void addTriangle(Primitive primitive);
     void addRandomTriangle();
+    void addRandomCube();
 
     void drawDebugText(GLAutoDrawable drawable);
     void drawAxis();

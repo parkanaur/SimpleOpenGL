@@ -6,12 +6,9 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.operations.Translation;
-import ru.dansstuff.simpleopengl.objects.Line;
-import ru.dansstuff.simpleopengl.objects.OpenGLColor;
-import ru.dansstuff.simpleopengl.objects.Primitive;
-import ru.dansstuff.simpleopengl.objects.Triangle;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -67,11 +64,14 @@ public class OpenGLViewer implements ISceneViewer {
 
         // ---scene render---
         gl.glPushMatrix();
+
         gl.glTranslatef(center.x, center.y, center.z);
 
         gl.glRotatef(rotn.x, 1, 0, 0);
         gl.glRotatef(rotn.y, 0, 1, 0);
         gl.glRotatef(rotn.z, 0, 0, 1);
+
+
 
         drawAxis();
 
@@ -134,6 +134,11 @@ public class OpenGLViewer implements ISceneViewer {
     @Override
     public void addRandomLine() {
         objects.add(new Line<>(safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), OpenGLColor.getRandomColor()));
+    }
+
+    @Override
+    public void addRandomCube() {
+        objects.add(new Box(new Vec3(safeRnd(), safeRnd(), safeRnd()), safeRnd(), OpenGLColor.BLUE));
     }
 
     @Override

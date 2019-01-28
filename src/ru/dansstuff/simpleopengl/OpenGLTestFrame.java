@@ -24,7 +24,7 @@ public class OpenGLTestFrame
         this.height = height;
         setResizable(true);
         bindCanvas();
-        curPos = new Point(-1, 1);
+        curPos = new Point(-1, -1);
         initWindow(width, height);
         bindControls();
         Animator animator = new Animator(canvasWrapper.getGlCanvas());
@@ -44,14 +44,14 @@ public class OpenGLTestFrame
         });
         controlsPanel.add(triangleAddBtn, BorderLayout.EAST);
 
-        Button lineAddBtn = new Button("Add random line");
-        lineAddBtn.addActionListener(new ActionListener() {
+        Button cubeAddBtn = new Button("Add random cube");
+        cubeAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().addRandomLine();
+                canvasWrapper.getDrawer().addRandomCube();
             }
         });
-        controlsPanel.add(lineAddBtn, BorderLayout.EAST);
+        controlsPanel.add(cubeAddBtn, BorderLayout.EAST);
 
         Button clearBtn = new Button("Clear");
         clearBtn.addActionListener(new ActionListener() {
