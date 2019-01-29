@@ -33,7 +33,16 @@ public class OpenGLTestFrame
 
     private void bindControls() {
         Panel controlsPanel = new Panel();
-        controlsPanel.setLayout(new GridLayout(3, 1));
+        controlsPanel.setLayout(new GridLayout(4, 1));
+
+        Button showAxisBtn = new Button("Show axis");
+        showAxisBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                canvasWrapper.getDrawer().setDrawAxis(!canvasWrapper.getDrawer().getDrawAxis());
+            }
+        });
+        controlsPanel.add(showAxisBtn, BorderLayout.EAST);
 
         Button triangleAddBtn = new Button("Add random triangle");
         triangleAddBtn.addActionListener(new ActionListener() {

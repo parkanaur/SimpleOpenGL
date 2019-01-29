@@ -25,6 +25,12 @@ public class OpenGLViewer implements ISceneViewer {
     private Vec3 rotn;
     private Vec3 center;
 
+    private boolean drawAxis = true;
+
+    public boolean getDrawAxis() { return drawAxis; }
+    public void setDrawAxis(boolean value) { drawAxis = value; }
+
+    private List<Primitive> axis;
     private List<Primitive> objects;
     private Queue<OpenGLOperation> pendingOperations;
 
@@ -39,6 +45,7 @@ public class OpenGLViewer implements ISceneViewer {
         center = new Vec3(0 ,0, -6);
 
         objects = new ArrayList<>();
+        axis = getAxis();
         pendingOperations = new ConcurrentLinkedQueue<>();
     }
 
@@ -71,10 +78,11 @@ public class OpenGLViewer implements ISceneViewer {
         gl.glRotatef(rotn.y, 0, 1, 0);
         gl.glRotatef(rotn.z, 0, 0, 1);
 
-
-
-        drawAxis();
-
+        if (drawAxis) {
+            for (Primitive primitive : axis) {
+                primitive.draw(gl);
+            }
+        }
         for (Primitive primitive : objects) {
              primitive.draw(gl);
         }
@@ -89,19 +97,22 @@ public class OpenGLViewer implements ISceneViewer {
         drawDebugText(drawable);
     }
 
-    public void drawAxis() {
+    public List<Primitive> getAxis() {
+        List<Primitive> axis = new ArrayList<>();
         // X axis
-        addLine(new Line<>(-3, 0, 0, 3, 0, 0, OpenGLColor.RED));
-        addLine(new Line<>(3, 0, 0, 2.9, 0, -0.1, OpenGLColor.RED));
-        addLine(new Line<>(3, 0, 0, 2.9, 0, 0.1, OpenGLColor.RED));
+        axis.add(new Line(-3, 0, 0, 3, 0, 0, OpenGLColor.RED));
+        axis.add(new Line(3, 0, 0, 2.9f, 0, -0.1f, OpenGLColor.RED));
+        axis.add(new Line(3, 0, 0, 2.9f, 0, 0.1f, OpenGLColor.RED));
         // Y axis
-        addLine(new Line<>(0, -3, 0, 0, 3, 0, OpenGLColor.GREEN));
-        addLine(new Line<>(0, 3, 0, -0.1, 2.9, 0, OpenGLColor.GREEN));
-        addLine(new Line<>(0, 3, 0, 0.1, 2.9, 0, OpenGLColor.GREEN));
+        axis.add(new Line(0, -3, 0, 0, 3, 0, OpenGLColor.GREEN));
+        axis.add(new Line(0, 3, 0, -0.1f, 2.9f, 0, OpenGLColor.GREEN));
+        axis.add(new Line(0, 3, 0, 0.1f, 2.9f, 0, OpenGLColor.GREEN));
         // Z axis
-        addLine(new Line<>(0, 0, -3, 0, 0, 3, OpenGLColor.BLUE));
-        addLine(new Line<>(0, 0, 3, 0, -0.1, 2.9, OpenGLColor.BLUE));
-        addLine(new Line<>(0, 0, 3, 0, 0.1, 2.9, OpenGLColor.BLUE));
+        axis.add(new Line(0, 0, -3, 0, 0, 3, OpenGLColor.BLUE));
+        axis.add(new Line(0, 0, 3, 0, -0.1f, 2.9f, OpenGLColor.BLUE));
+        axis.add(new Line(0, 0, 3, 0, 0.1f, 2.9f, OpenGLColor.BLUE));
+
+        return axis;
     }
 
     @Override
@@ -133,7 +144,7 @@ public class OpenGLViewer implements ISceneViewer {
 
     @Override
     public void addRandomLine() {
-        objects.add(new Line<>(safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), OpenGLColor.getRandomColor()));
+        objects.add(new Line(safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), OpenGLColor.getRandomColor()));
     }
 
     @Override

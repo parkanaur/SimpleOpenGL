@@ -14,7 +14,8 @@ public interface ISceneViewer extends GLEventListener {
     void addRandomCube();
 
     void drawDebugText(GLAutoDrawable drawable);
-    void drawAxis();
+    boolean getDrawAxis();
+    void setDrawAxis(boolean value);
 
     void rotLeft(float deg);
     void rotRight(float deg);
