@@ -1,21 +1,12 @@
-package ru.dansstuff.simpleopengl.drawers;
+package ru.dansstuff.simpleopengl.viewer;
 
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-import ru.dansstuff.simpleopengl.objects.Primitive;
 
 import java.util.Random;
 
 public interface ISceneViewer extends GLEventListener {
-    void addLine(Primitive primitive);
-    void addRandomLine();
-    void addTriangle(Primitive primitive);
-    void addRandomTriangle();
-    void addRandomCube();
-
     void drawDebugText(GLAutoDrawable drawable);
-    boolean getDrawAxis();
-    void setDrawAxis(boolean value);
 
     void rotLeft(float deg);
     void rotRight(float deg);

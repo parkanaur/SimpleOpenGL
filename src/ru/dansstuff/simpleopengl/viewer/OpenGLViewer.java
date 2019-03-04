@@ -1,14 +1,17 @@
-package ru.dansstuff.simpleopengl.drawers;
+package ru.dansstuff.simpleopengl.viewer;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.awt.TextRenderer;
+import lombok.Getter;
+import lombok.Setter;
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.operations.Translation;
+import ru.dansstuff.simpleopengl.tree.GLNode;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,45 +20,63 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class OpenGLViewer implements ISceneViewer {
+    private GL2 gl;
     private GLU glu;
     private GLCanvas canvas;
     private TextRenderer textRenderer;
+    private TextRenderer labelRenderer;
 
     private Vec3 cam;
     private Vec3 rotn;
     private Vec3 center;
 
+    @Setter @Getter
     private boolean drawAxis = true;
 
     public boolean getDrawAxis() { return drawAxis; }
-    public void setDrawAxis(boolean value) { drawAxis = value; }
 
-    private List<Primitive> axis;
-    private List<Primitive> objects;
+    private List<GLObject> axis;
     private Queue<OpenGLOperation> pendingOperations;
+
+    @Getter @Setter
+    private GLNode root;
 
 
     public OpenGLViewer(GLCanvas canvas) {
         glu = new GLU();
         this.canvas = canvas;
         textRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
+        labelRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
 
         cam = new Vec3(0, 0, -1);
         rotn = new Vec3(15, 45, 0);
         center = new Vec3(0 ,0, -6);
 
-        objects = new ArrayList<>();
         axis = getAxis();
         pendingOperations = new ConcurrentLinkedQueue<>();
     }
 
     @Override
     public void init(GLAutoDrawable glAutoDrawable) {
-        final GL2 gl = glAutoDrawable.getGL().getGL2();
+        gl = glAutoDrawable.getGL().getGL2();
         gl.glClearColor(0, 0, 0, 0);
         gl.glShadeModel(gl.GL_FLAT);
+
+        // Lighting setup
+        /*
+        gl.glEnable(gl.GL_LIGHTING);
+        gl.glEnable(gl.GL_COLOR_MATERIAL);
+        gl.glColorMaterial(gl.GL_FRONT_AND_BACK, gl.GL_AMBIENT_AND_DIFFUSE);
+        float[] ambColor = new float[] {0.5f, 0.5f, 0.5f, 1};
+        gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambColor, 0);
+        gl.glEnable(gl.GL_NORMALIZE);*/
+
         gl.glEnable(gl.GL_DEPTH_TEST);
+
+        gl.glMatrixMode(gl.GL_PROJECTION);
         glu.gluPerspective(45.0f,  (double)canvas.getSize().width / canvas.getSize().height, 0.1f, 1000f);
+        gl.glMatrixMode(gl.GL_MODELVIEW);
+
         moveBackward(5);
     }
 
@@ -73,19 +94,28 @@ public class OpenGLViewer implements ISceneViewer {
         gl.glPushMatrix();
 
         gl.glTranslatef(center.x, center.y, center.z);
-
         gl.glRotatef(rotn.x, 1, 0, 0);
         gl.glRotatef(rotn.y, 0, 1, 0);
         gl.glRotatef(rotn.z, 0, 0, 1);
 
         if (drawAxis) {
-            for (Primitive primitive : axis) {
-                primitive.draw(gl);
+            for (GLObject ax : axis) {
+                ax.draw(gl);
             }
         }
-        for (Primitive primitive : objects) {
-             primitive.draw(gl);
+
+        if (root != null) {
+            root.drawTree(gl);
         }
+
+        /*labelRenderer.begin3DRendering();
+        for (GLObject light : lights) {
+            light.draw(gl);
+            float[] pos = ((DirectionalLight)light).pos;
+            labelRenderer.draw3D(String.format("light %.02f %.02f %.02f", pos[0], pos[1], pos[2]), pos[0], pos[1], pos[2], 0.01f);
+        }
+        labelRenderer.end3DRendering();*/
+
         gl.glPopMatrix();
         // ---scene render end---
 
@@ -95,10 +125,11 @@ public class OpenGLViewer implements ISceneViewer {
         }
 
         drawDebugText(drawable);
+
     }
 
-    public List<Primitive> getAxis() {
-        List<Primitive> axis = new ArrayList<>();
+    public List<GLObject> getAxis() {
+        List<GLObject> axis = new ArrayList<>();
         // X axis
         axis.add(new Line(-3, 0, 0, 3, 0, 0, OpenGLColor.RED));
         axis.add(new Line(3, 0, 0, 2.9f, 0, -0.1f, OpenGLColor.RED));
@@ -129,42 +160,13 @@ public class OpenGLViewer implements ISceneViewer {
 
     @Override
     public void drawDebugText(GLAutoDrawable drawable) {
-        textRenderer.beginRendering(canvas.getWidth(), canvas.getHeight());
-        textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.x, rotn.y, rotn.z), 10, canvas.getHeight() - 15);
-        //textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, canvas.getHeight() - 30);
-        textRenderer.endRendering();
-    }
-
-    @Override
-    public void addLine(Primitive primitive) {
-        if (primitive instanceof Line) {
-            objects.add(primitive);
+        if (root != null) {
+            textRenderer.beginRendering(canvas.getWidth(), canvas.getHeight());
+            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.x, rotn.y, rotn.z), 10, canvas.getHeight() - 15);
+            textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, canvas.getHeight() - 30);
+            //textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, canvas.getHeight() - 30);
+            textRenderer.endRendering();
         }
-    }
-
-    @Override
-    public void addRandomLine() {
-        objects.add(new Line(safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), safeRnd(), OpenGLColor.getRandomColor()));
-    }
-
-    @Override
-    public void addRandomCube() {
-        objects.add(new Box(new Vec3(safeRnd(), safeRnd(), safeRnd()), safeRnd(), OpenGLColor.BLUE));
-    }
-
-    @Override
-    public void addTriangle(Primitive primitive) {
-        if (primitive instanceof Triangle) {
-            objects.add(primitive);
-        }
-    }
-
-    @Override
-    public void addRandomTriangle() {
-        objects.add(new Triangle<>(safeRnd()*2, safeRnd()*2, safeRnd()*2,
-                                   safeRnd()*2, safeRnd()*2, safeRnd()*2,
-                                   safeRnd()*2, safeRnd()*2, safeRnd()*2,
-                                       OpenGLColor.getRandomColor()));
     }
 
     @Override
@@ -236,7 +238,8 @@ public class OpenGLViewer implements ISceneViewer {
 
     @Override
     public void clear() {
-        objects.clear();
+        root.clearChildren();
+        root = null;
         cam = new Vec3(0, 0, -1);
         center = new Vec3(0 ,0, -6);
         rotn = new Vec3(15, 45, 0);

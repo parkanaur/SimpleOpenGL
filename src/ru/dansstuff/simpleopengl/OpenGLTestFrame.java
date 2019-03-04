@@ -1,7 +1,8 @@
 package ru.dansstuff.simpleopengl;
 
 import com.jogamp.opengl.util.Animator;
-import ru.dansstuff.simpleopengl.drawers.ISceneViewer;
+import ru.dansstuff.simpleopengl.viewer.ISceneViewer;
+import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,34 +34,17 @@ public class OpenGLTestFrame
 
     private void bindControls() {
         Panel controlsPanel = new Panel();
-        controlsPanel.setLayout(new GridLayout(4, 1));
+        controlsPanel.setLayout(new GridLayout(2, 1));
 
         Button showAxisBtn = new Button("Show axis");
         showAxisBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().setDrawAxis(!canvasWrapper.getDrawer().getDrawAxis());
+                OpenGLViewer viewer = (OpenGLViewer)canvasWrapper.getViewer();
+                viewer.setDrawAxis(!viewer.getDrawAxis());
             }
         });
         controlsPanel.add(showAxisBtn, BorderLayout.EAST);
-
-        Button triangleAddBtn = new Button("Add random triangle");
-        triangleAddBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().addRandomTriangle();
-            }
-        });
-        controlsPanel.add(triangleAddBtn, BorderLayout.EAST);
-
-        Button cubeAddBtn = new Button("Add random cube");
-        cubeAddBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                canvasWrapper.getDrawer().addRandomCube();
-            }
-        });
-        controlsPanel.add(cubeAddBtn, BorderLayout.EAST);
 
         Button clearBtn = new Button("Clear");
         clearBtn.addActionListener(new ActionListener() {
@@ -81,7 +65,7 @@ public class OpenGLTestFrame
         canvasWrapper.getGlCanvas().addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                canvasWrapper.getDrawer().scale(e.getWheelRotation());
+                canvasWrapper.getViewer().scale(e.getWheelRotation());
             }
         });
         canvasWrapper.getGlCanvas().addKeyListener(new KeyListener() {
@@ -97,25 +81,25 @@ public class OpenGLTestFrame
                 switch (key) {
                     case KeyEvent.VK_W:
                     case KeyEvent.VK_UP:
-                        canvasWrapper.getDrawer().moveForward(0.1f);
+                        canvasWrapper.getViewer().moveForward(0.1f);
                         break;
                     case KeyEvent.VK_S:
                     case KeyEvent.VK_DOWN:
-                        canvasWrapper.getDrawer().moveBackward(0.1f);
+                        canvasWrapper.getViewer().moveBackward(0.1f);
                         break;
                     case KeyEvent.VK_A:
                     case KeyEvent.VK_LEFT:
-                        canvasWrapper.getDrawer().moveLeft(0.1f);
+                        canvasWrapper.getViewer().moveLeft(0.1f);
                         break;
                     case KeyEvent.VK_D:
                     case KeyEvent.VK_RIGHT:
-                        canvasWrapper.getDrawer().moveRight(0.1f);
+                        canvasWrapper.getViewer().moveRight(0.1f);
                         break;
                     case KeyEvent.VK_SHIFT:
-                        canvasWrapper.getDrawer().moveUp(0.1f);
+                        canvasWrapper.getViewer().moveUp(0.1f);
                         break;
                     case KeyEvent.VK_CONTROL:
-                        canvasWrapper.getDrawer().moveDown(0.1f);
+                        canvasWrapper.getViewer().moveDown(0.1f);
                         break;
                 }
             }
@@ -156,7 +140,7 @@ public class OpenGLTestFrame
         canvasWrapper.getGlCanvas().addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                ISceneViewer drawer = canvasWrapper.getDrawer();
+                ISceneViewer drawer = canvasWrapper.getViewer();
                 if (e.getX() != curPos.x) {
                     if (curPos.x != -1)
                         drawer.rotLeft((e.getX() - curPos.x) * 0.1f);
