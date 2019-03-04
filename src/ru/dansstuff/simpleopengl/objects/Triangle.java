@@ -3,14 +3,17 @@ package ru.dansstuff.simpleopengl.objects;
 import com.jogamp.opengl.GL2;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Triangle implements GLObject {
     @Getter
-    public final Vec3 p1, p2, p3;
+    private final Vec3 p1, p2, p3;
     @Getter
     private final OpenGLColor color;
+    @Getter
+    private final String type = "Triangle";
 
     public void draw(GL2 gl) {
         gl.glBegin(GL2.GL_TRIANGLES);

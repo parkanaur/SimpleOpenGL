@@ -1,7 +1,8 @@
 package ru.dansstuff.simpleopengl;
 
 import com.jogamp.opengl.util.Animator;
-import ru.dansstuff.simpleopengl.viewer.ISceneViewer;
+import lombok.Getter;
+import lombok.Setter;
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class OpenGLTestFrame
     private int width;
     private int height;
 
+    @Getter @Setter
     private GLCanvasWrapper canvasWrapper;
     private Point curPos;
 
@@ -140,7 +142,7 @@ public class OpenGLTestFrame
         canvasWrapper.getGlCanvas().addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                ISceneViewer drawer = canvasWrapper.getViewer();
+                OpenGLViewer drawer = canvasWrapper.getViewer();
                 if (e.getX() != curPos.x) {
                     if (curPos.x != -1)
                         drawer.rotLeft((e.getX() - curPos.x) * 0.1f);

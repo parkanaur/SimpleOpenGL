@@ -11,7 +11,7 @@ import java.util.List;
 public class GLNode {
     @Getter @Setter
     private String id;
-    @Getter @Setter
+    @Getter
     private GLObject glObject;
     @Getter @Setter
     private List<GLNode> children;

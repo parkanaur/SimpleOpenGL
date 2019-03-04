@@ -3,10 +3,11 @@ package ru.dansstuff.simpleopengl.objects;
 import com.jogamp.opengl.GL2;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Box implements GLObject {
     @Getter
     private final Vec3 center;
@@ -14,6 +15,8 @@ public class Box implements GLObject {
     private final float length;
     @Getter
     private final OpenGLColor color;
+    @Getter
+    private final String type = "Box";
 
     public void draw (GL2 gl) {
         float size = length / 2;

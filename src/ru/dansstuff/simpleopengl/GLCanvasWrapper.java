@@ -1,11 +1,10 @@
 package ru.dansstuff.simpleopengl;
 
 import com.jogamp.opengl.awt.GLCanvas;
-import ru.dansstuff.simpleopengl.viewer.ISceneViewer;
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 
 public class GLCanvasWrapper {
-    private final ISceneViewer viewer;
+    private final OpenGLViewer viewer;
     private final GLCanvas glCanvas;
 
     public GLCanvasWrapper(int width, int height) {
@@ -16,7 +15,7 @@ public class GLCanvasWrapper {
         glCanvas.addGLEventListener(viewer);
     }
 
-    public ISceneViewer getViewer() { return viewer; }
+    public OpenGLViewer getViewer() { return viewer; }
 
     public GLCanvas getGlCanvas() {
         return glCanvas;

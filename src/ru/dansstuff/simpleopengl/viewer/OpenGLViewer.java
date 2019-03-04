@@ -1,6 +1,7 @@
 package ru.dansstuff.simpleopengl.viewer;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class OpenGLViewer implements ISceneViewer {
+public class OpenGLViewer implements GLEventListener {
     private GL2 gl;
     private GLU glu;
     private GLCanvas canvas;
@@ -30,7 +31,7 @@ public class OpenGLViewer implements ISceneViewer {
     private Vec3 rotn;
     private Vec3 center;
 
-    @Setter @Getter
+    @Setter
     private boolean drawAxis = true;
 
     public boolean getDrawAxis() { return drawAxis; }
@@ -131,22 +132,21 @@ public class OpenGLViewer implements ISceneViewer {
     public List<GLObject> getAxis() {
         List<GLObject> axis = new ArrayList<>();
         // X axis
-        axis.add(new Line(-3, 0, 0, 3, 0, 0, OpenGLColor.RED));
-        axis.add(new Line(3, 0, 0, 2.9f, 0, -0.1f, OpenGLColor.RED));
-        axis.add(new Line(3, 0, 0, 2.9f, 0, 0.1f, OpenGLColor.RED));
+        axis.add(new Line(new Vec3(-3, 0, 0), new Vec3(3, 0, 0), OpenGLColor.RED));
+        axis.add(new Line(new Vec3(3, 0, 0), new Vec3(2.9f, 0, -0.1f), OpenGLColor.RED));
+        axis.add(new Line(new Vec3(3, 0, 0), new Vec3(2.9f, 0, 0.1f), OpenGLColor.RED));
         // Y axis
-        axis.add(new Line(0, -3, 0, 0, 3, 0, OpenGLColor.GREEN));
-        axis.add(new Line(0, 3, 0, -0.1f, 2.9f, 0, OpenGLColor.GREEN));
-        axis.add(new Line(0, 3, 0, 0.1f, 2.9f, 0, OpenGLColor.GREEN));
+        axis.add(new Line(new Vec3(0, -3, 0), new Vec3(0, 3, 0), OpenGLColor.GREEN));
+        axis.add(new Line(new Vec3(0, 3, 0), new Vec3(-0.1f, 2.9f, 0), OpenGLColor.GREEN));
+        axis.add(new Line(new Vec3(0, 3, 0), new Vec3(0.1f, 2.9f, 0), OpenGLColor.GREEN));
         // Z axis
-        axis.add(new Line(0, 0, -3, 0, 0, 3, OpenGLColor.BLUE));
-        axis.add(new Line(0, 0, 3, 0, -0.1f, 2.9f, OpenGLColor.BLUE));
-        axis.add(new Line(0, 0, 3, 0, 0.1f, 2.9f, OpenGLColor.BLUE));
+        axis.add(new Line(new Vec3(0, 0, -3), new Vec3(0, 0, 3), OpenGLColor.BLUE));
+        axis.add(new Line(new Vec3(0, 0, 3), new Vec3(0, -0.1f, 2.9f), OpenGLColor.BLUE));
+        axis.add(new Line(new Vec3(0, 0, 3), new Vec3(0, 0.1f, 2.9f), OpenGLColor.BLUE));
 
         return axis;
     }
 
-    @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         final GL2 gl = drawable.getGL().getGL2();
         if (height == 0) height = 1;
@@ -158,7 +158,6 @@ public class OpenGLViewer implements ISceneViewer {
         gl.glLoadIdentity();
     }
 
-    @Override
     public void drawDebugText(GLAutoDrawable drawable) {
         if (root != null) {
             textRenderer.beginRendering(canvas.getWidth(), canvas.getHeight());
@@ -169,7 +168,6 @@ public class OpenGLViewer implements ISceneViewer {
         }
     }
 
-    @Override
     public void rotLeft(float deg) {
         rotn.y += deg;
         if (rotn.y >= 360) rotn.y = 0;
@@ -177,66 +175,55 @@ public class OpenGLViewer implements ISceneViewer {
         //pendingOperations.add(new Rotation(-deg, 0, 1, 0));
     }
 
-    @Override
     public void rotRight(float deg) {
         rotLeft(-deg);
     }
 
-    @Override
     public void rotUp(float deg) {
         rotn.x += deg;
         if (rotn.x >= 360) rotn.x = 0;
         if (rotn.x <= -360) rotn.x = 0;
     }
 
-    @Override
     public void rotDown(float deg) {
         rotUp(-deg);
     }
 
-    @Override
     public void scale(int direction) {
         moveBackward(direction);
     }
 
-    @Override
     public void moveForward(float dist) {
         cam.z += dist;
         pendingOperations.add(new Translation(0, 0, dist));
     }
 
-    @Override
     public void moveBackward(float dist) {
         moveForward(-dist);
     }
 
-    @Override
     public void moveLeft(float dist) {
         // center.x += dist;
         cam.x += dist;
         pendingOperations.add(new Translation(dist, 0, 0));
     }
 
-    @Override
     public void moveRight(float dist) {
         //center.x -= dist;
         moveLeft(-dist);
     }
 
-    @Override
     public void moveUp(float dist) {
         // center.x += dist;
         cam.y += dist;
         pendingOperations.add(new Translation(0, -dist, 0));
     }
 
-    @Override
     public void moveDown(float dist) {
         //center.x -= dist;
         moveUp(-dist);
     }
 
-    @Override
     public void clear() {
         root.clearChildren();
         root = null;
