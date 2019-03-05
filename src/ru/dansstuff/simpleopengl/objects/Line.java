@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
 @RequiredArgsConstructor
-public class Line implements GLObject {
+public class Line extends GLObject {
     @Getter
     private final Vec3 p1, p2;
     @Getter

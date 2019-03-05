@@ -3,7 +3,7 @@ package ru.dansstuff.simpleopengl.objects;
 import com.jogamp.opengl.GL2;
 import ru.dansstuff.simpleopengl.math.*;
 
-public class DirectionalLight implements GLObject {
+public class DirectionalLight extends GLObject {
     public float[] color;
     public float[] pos;
     private int index;

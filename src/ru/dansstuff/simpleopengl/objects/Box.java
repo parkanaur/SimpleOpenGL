@@ -8,7 +8,7 @@ import lombok.Setter;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
 @RequiredArgsConstructor
-public class Box implements GLObject {
+public class Box extends GLObject {
     @Getter
     private final Vec3 center;
     @Getter
@@ -35,7 +35,6 @@ public class Box implements GLObject {
         gl.glVertex3f(  size, size,  size );  // Bottom-right of top face
 
         // Bottom face
-        gl.glColor3f(   1.0f,  0.5f,  0.0f ); // Orange
         gl.glNormal3f(0, -1, 0);
         gl.glVertex3f(  size, -size, -size ); // Top-right of bottom face
         gl.glNormal3f(0, -1, 0);
@@ -46,7 +45,6 @@ public class Box implements GLObject {
         gl.glVertex3f(  size, -size,  size ); // Bottom-right of bottom face
 
         // Front face
-        gl.glColor3f(   1.0f,  0.0f, 0.0f );  // Red
         gl.glNormal3f(0, 0, -1);
         gl.glVertex3f(  size,  size, size );  // Top-Right of front face
         gl.glNormal3f(0, 0, -1);
@@ -57,7 +55,6 @@ public class Box implements GLObject {
         gl.glVertex3f(  size, -size, size );  // Bottom-right of front face
 
         // Back face
-        gl.glColor3f(   1.0f,  1.0f,  0.0f ); // Yellow
         gl.glNormal3f(0, 0, 1);
         gl.glVertex3f(  size, -size, -size ); // Bottom-Left of back face
         gl.glNormal3f(0, 0, 1);
@@ -68,7 +65,6 @@ public class Box implements GLObject {
         gl.glVertex3f(  size,  size, -size ); // Top-Left of back face
 
         // Left face
-        gl.glColor3f(   0.0f,  0.0f,  1.0f);  // Blue
         gl.glNormal3f(-1, 0, 0);
         gl.glVertex3f( -size,  size,  size);  // Top-Right of left face
         gl.glNormal3f(-1, 0, 0);
@@ -79,7 +75,6 @@ public class Box implements GLObject {
         gl.glVertex3f( -size, -size,  size);  // Bottom-Right of left face
 
         // Right face
-        gl.glColor3f(   1.0f,  0.0f,  1.0f);  // Magenta
         gl.glNormal3f(1, 0, 0);
         gl.glVertex3f(  size,  size,  size);  // Top-Right of left face
         gl.glNormal3f(1, 0, 0);

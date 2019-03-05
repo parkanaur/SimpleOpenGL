@@ -1,4 +1,4 @@
-package ru.dansstuff.simpleopengl;
+package ru.dansstuff.simpleopengl.window;
 
 import com.jogamp.opengl.util.Animator;
 import lombok.Getter;
@@ -29,41 +29,12 @@ public class OpenGLTestFrame
         bindCanvas();
         curPos = new Point(-1, -1);
         initWindow(width, height);
-        bindControls();
         Animator animator = new Animator(canvasWrapper.getGlCanvas());
         animator.start();
     }
 
-    private void bindControls() {
-        Panel controlsPanel = new Panel();
-        controlsPanel.setLayout(new GridLayout(2, 1));
-
-        Button showAxisBtn = new Button("Show axis");
-        showAxisBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OpenGLViewer viewer = (OpenGLViewer)canvasWrapper.getViewer();
-                viewer.setDrawAxis(!viewer.getDrawAxis());
-            }
-        });
-        controlsPanel.add(showAxisBtn, BorderLayout.EAST);
-
-        Button clearBtn = new Button("Clear");
-        clearBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                canvasWrapper.clear();
-            }
-        });
-        controlsPanel.add(clearBtn, BorderLayout.EAST);
-
-        getContentPane().add(controlsPanel, BorderLayout.EAST);
-        pack();
-        setVisible(true);
-    }
-
     private void bindCanvas() {
-        canvasWrapper = new GLCanvasWrapper(width * 2 / 3, height);
+        canvasWrapper = new GLCanvasWrapper(width, height);
         canvasWrapper.getGlCanvas().addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
@@ -158,6 +129,15 @@ public class OpenGLTestFrame
             @Override
             public void mouseMoved(MouseEvent e) {
 
+            }
+        });
+        canvasWrapper.getGlCanvas().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    OpenGLTestFramePopupMenu menu = new OpenGLTestFramePopupMenu(canvasWrapper);
+                    menu.show(e.getComponent(), e.getX(), e.getY());
+                }
             }
         });
         add(canvasWrapper.getGlCanvas(), BorderLayout.WEST);

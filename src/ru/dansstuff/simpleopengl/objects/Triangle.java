@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
 @RequiredArgsConstructor
-public class Triangle implements GLObject {
+public class Triangle extends GLObject {
     @Getter
     private final Vec3 p1, p2, p3;
     @Getter

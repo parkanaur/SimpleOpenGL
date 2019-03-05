@@ -1,4 +1,4 @@
-package ru.dansstuff.simpleopengl;
+package ru.dansstuff.simpleopengl.window;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;

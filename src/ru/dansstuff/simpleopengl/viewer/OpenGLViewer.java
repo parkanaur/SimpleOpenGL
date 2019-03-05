@@ -31,10 +31,11 @@ public class OpenGLViewer implements GLEventListener {
     private Vec3 rotn;
     private Vec3 center;
 
-    @Setter
+    @Getter @Setter
     private boolean drawAxis = true;
 
-    public boolean getDrawAxis() { return drawAxis; }
+    @Getter @Setter
+    private boolean enabled = false;
 
     private List<GLObject> axis;
     private Queue<OpenGLOperation> pendingOperations;
@@ -88,6 +89,10 @@ public class OpenGLViewer implements GLEventListener {
 
     @Override
     public void display(GLAutoDrawable drawable) {
+        if (!enabled) {
+            return;
+        }
+
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClear (gl.GL_COLOR_BUFFER_BIT |  gl.GL_DEPTH_BUFFER_BIT );
 
