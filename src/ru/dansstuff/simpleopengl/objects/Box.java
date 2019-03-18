@@ -1,27 +1,30 @@
 package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Box extends GLObject {
-    @Getter
-    private final Vec3 center;
-    @Getter
-    private final float length;
-    @Getter
-    private final OpenGLColor color;
+    @Getter @Setter
+    private Vec3 center;
+    @Getter @Setter
+    private float length;
+    @Getter @Setter
+    private OpenGLColor color;
     @Getter
     private final String type = "Box";
+
+    public Box(Vec3 center, float length, OpenGLColor color) {
+        this.center = center;
+        this.length = length;
+        this.color = color;
+    }
 
     public void draw (GL2 gl) {
         float size = length / 2;
         gl.glPushMatrix();
-        gl.glTranslatef(center.x, center.y, center.z);
+        gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glBegin( gl.GL_QUADS );
         // Top face
         gl.glColor3f(color.getR(), color.getG(), color.getB());  // Green

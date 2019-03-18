@@ -1,12 +1,15 @@
 package ru.dansstuff.simpleopengl.objects;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Random;
 
+@NoArgsConstructor
 public class OpenGLColor {
-    @Getter
-    private final float r, g, b;
+    @Getter @Setter
+    private float r, g, b;
     private static Random random = new Random();
 
     public OpenGLColor(float r, float g, float b) {

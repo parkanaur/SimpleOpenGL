@@ -1,16 +1,21 @@
 package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
+import lombok.*;
 import ru.dansstuff.simpleopengl.math.*;
 
+@NoArgsConstructor
 public class DirectionalLight extends GLObject {
-    public float[] color;
-    public float[] pos;
+    @Getter @Setter
+    private float[] color;
+    @Getter @Setter
+    private float[] pos;
+    @Getter
     private int index;
 
     public DirectionalLight(Vec4 color, Vec4 pos, int index) {
-        this.color = new float[] { color.x, color.y, color.z, color.w };
-        this.pos = new float[] { pos.x, pos.y, pos.z, pos.w };
+        this.color = new float[] { color.getX(), color.getY(), color.getZ(), color.getW() };
+        this.pos = new float[] { pos.getX(), pos.getY(), pos.getZ(), pos.getW() };
         this.index = index;
     }
 

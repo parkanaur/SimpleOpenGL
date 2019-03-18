@@ -12,15 +12,15 @@ import java.awt.event.*;
 public class OpenGLTestFrame
         extends JFrame {
 
+    @Getter
     private int width;
+    @Getter
     private int height;
 
     @Getter @Setter
     private GLCanvasWrapper canvasWrapper;
-    private Point curPos;
 
-    public int getWidth()  { return width; }
-    public int getHeight() { return height; }
+    private Point curPos;
 
     public OpenGLTestFrame(int width, int height) {
         this.width = width;

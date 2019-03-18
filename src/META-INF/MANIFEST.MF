@@ -1,3 +1,39 @@
 Manifest-Version: 1.0
 Main-Class: ru.dansstuff.simpleopengl.Main
+Class-Path: gson-2.8.5.jar
 
+Name: ru/dansstuff/simpleopengl/math/Vec3.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/math/Vec4.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/Box.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/DirectionalLight.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/GLObject.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/Line.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/OpenGLColor.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/Sphere.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/objects/Triangle.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/tree/GLNode.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/viewer/OpenGLViewer.class
+Java-Bean: True
+
+Name: ru/dansstuff/simpleopengl/window/GLCanvasWrapper.class
+Java-Bean: True

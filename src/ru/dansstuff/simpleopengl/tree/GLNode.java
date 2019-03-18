@@ -2,16 +2,18 @@ package ru.dansstuff.simpleopengl.tree;
 
 import com.jogamp.opengl.GL2;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 public class GLNode {
     @Getter @Setter
     private String id;
-    @Getter
+    @Getter @Setter
     private GLObject glObject;
     @Getter @Setter
     private List<GLNode> children;

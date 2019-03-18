@@ -7,6 +7,7 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.*;
@@ -15,20 +16,28 @@ import ru.dansstuff.simpleopengl.operations.Translation;
 import ru.dansstuff.simpleopengl.tree.GLNode;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class OpenGLViewer implements GLEventListener {
+@NoArgsConstructor
+public class OpenGLViewer implements GLEventListener, Serializable {
+    @Getter @Setter
     private GL2 gl;
+    @Getter @Setter
     private GLU glu;
+    @Getter @Setter
     private GLCanvas canvas;
     private TextRenderer textRenderer;
     private TextRenderer labelRenderer;
 
+    @Getter @Setter
     private Vec3 cam;
+    @Getter @Setter
     private Vec3 rotn;
+    @Getter @Setter
     private Vec3 center;
 
     @Getter @Setter
@@ -99,10 +108,10 @@ public class OpenGLViewer implements GLEventListener {
         // ---scene render---
         gl.glPushMatrix();
 
-        gl.glTranslatef(center.x, center.y, center.z);
-        gl.glRotatef(rotn.x, 1, 0, 0);
-        gl.glRotatef(rotn.y, 0, 1, 0);
-        gl.glRotatef(rotn.z, 0, 0, 1);
+        gl.glTranslatef(center.getX(), center.getY(), center.getZ());
+        gl.glRotatef(rotn.getX(), 1, 0, 0);
+        gl.glRotatef(rotn.getY(), 0, 1, 0);
+        gl.glRotatef(rotn.getZ(), 0, 0, 1);
 
         if (drawAxis) {
             for (GLObject ax : axis) {
@@ -166,7 +175,7 @@ public class OpenGLViewer implements GLEventListener {
     public void drawDebugText(GLAutoDrawable drawable) {
         if (root != null) {
             textRenderer.beginRendering(canvas.getWidth(), canvas.getHeight());
-            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.x, rotn.y, rotn.z), 10, canvas.getHeight() - 15);
+            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.getX(), rotn.getY(), rotn.getZ()), 10, canvas.getHeight() - 15);
             textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, canvas.getHeight() - 30);
             //textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, canvas.getHeight() - 30);
             textRenderer.endRendering();
@@ -174,9 +183,8 @@ public class OpenGLViewer implements GLEventListener {
     }
 
     public void rotLeft(float deg) {
-        rotn.y += deg;
-        if (rotn.y >= 360) rotn.y = 0;
-        if (rotn.y <= -360) rotn.y = 0;
+        rotn.setY(rotn.getY() + deg);
+        if (rotn.getY() >= 360 || rotn.getY() <= -360) rotn.setY(0);
         //pendingOperations.add(new Rotation(-deg, 0, 1, 0));
     }
 
@@ -185,9 +193,8 @@ public class OpenGLViewer implements GLEventListener {
     }
 
     public void rotUp(float deg) {
-        rotn.x += deg;
-        if (rotn.x >= 360) rotn.x = 0;
-        if (rotn.x <= -360) rotn.x = 0;
+        rotn.setX(rotn.getX() + deg);
+        if (rotn.getX() >= 360 || rotn.getX() <= -360) rotn.setX(0);
     }
 
     public void rotDown(float deg) {
@@ -199,7 +206,7 @@ public class OpenGLViewer implements GLEventListener {
     }
 
     public void moveForward(float dist) {
-        cam.z += dist;
+        cam.setZ(cam.getZ() + dist);
         pendingOperations.add(new Translation(0, 0, dist));
     }
 
@@ -209,7 +216,7 @@ public class OpenGLViewer implements GLEventListener {
 
     public void moveLeft(float dist) {
         // center.x += dist;
-        cam.x += dist;
+        cam.setX(cam.getX() + dist);
         pendingOperations.add(new Translation(dist, 0, 0));
     }
 
@@ -220,7 +227,7 @@ public class OpenGLViewer implements GLEventListener {
 
     public void moveUp(float dist) {
         // center.x += dist;
-        cam.y += dist;
+        cam.setY(cam.getY() + dist);
         pendingOperations.add(new Translation(0, -dist, 0));
     }
 
