@@ -120,7 +120,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         }
 
         if (root != null) {
+            gl.glPushMatrix();
             root.drawTree(gl);
+            gl.glPopMatrix();
         }
 
         /*labelRenderer.begin3DRendering();

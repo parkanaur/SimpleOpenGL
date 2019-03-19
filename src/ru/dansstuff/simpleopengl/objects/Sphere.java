@@ -27,12 +27,12 @@ public class Sphere extends GLObject {
     public void draw(GL2 gl) {
         GLU glu = new GLU();
 
-        gl.glPushMatrix();
+        //gl.glPushMatrix();
         gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glColor3f(color.getR(), color.getG(), color.getB());
         GLUquadric q = glu.gluNewQuadric();
-        glu.gluSphere(q, radius, 10, 10);
+        glu.gluSphere(q, radius, 100, 100);
 
-        gl.glPopMatrix();
+        //gl.glPopMatrix();
     }
 }

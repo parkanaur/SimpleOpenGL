@@ -23,7 +23,7 @@ public class Box extends GLObject {
 
     public void draw (GL2 gl) {
         float size = length / 2;
-        gl.glPushMatrix();
+        //gl.glPushMatrix();
         gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glBegin( gl.GL_QUADS );
         // Top face
@@ -88,6 +88,6 @@ public class Box extends GLObject {
         gl.glVertex3f(  size, -size,  size);  // Bottom-Right of left face
 
         gl.glEnd();
-        gl.glPopMatrix();
+        //gl.glPopMatrix();
     }
 }
