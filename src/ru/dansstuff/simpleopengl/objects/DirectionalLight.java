@@ -7,21 +7,23 @@ import ru.dansstuff.simpleopengl.math.*;
 @NoArgsConstructor
 public class DirectionalLight extends GLObject {
     @Getter @Setter
-    private float[] color;
+    private Vec4 color;
     @Getter @Setter
-    private float[] pos;
+    private Vec4 pos;
     @Getter
     private int index;
+    @Getter
+    private final String type = "DirectionalLight";
 
     public DirectionalLight(Vec4 color, Vec4 pos, int index) {
-        this.color = new float[] { color.getX(), color.getY(), color.getZ(), color.getW() };
-        this.pos = new float[] { pos.getX(), pos.getY(), pos.getZ(), pos.getW() };
+        this.color = color;
+        this.pos = pos;
         this.index = index;
     }
 
     @Override
     public void draw(GL2 gl) {
-        gl.glLightfv(gl.GL_LIGHT0 + index, gl.GL_DIFFUSE, color, 0);
-        gl.glLightfv(gl.GL_LIGHT0 + index, gl.GL_POSITION, pos, 0);
+        gl.glLightfv(gl.GL_LIGHT0 + index, gl.GL_DIFFUSE, new float[] { color.getX(), color.getY(), color.getZ(), color.getW() }, index);
+        gl.glLightfv(gl.GL_LIGHT0 + index, gl.GL_POSITION, new float[] { pos.getX(), pos.getY(), pos.getZ(), pos.getW() }, index);
     }
 }

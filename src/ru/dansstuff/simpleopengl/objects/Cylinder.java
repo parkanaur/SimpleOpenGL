@@ -7,20 +7,23 @@ import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
 @NoArgsConstructor
-public class Sphere extends GLObject {
+public class Cylinder extends GLObject {
     @Getter @Setter
     private Vec3 center;
     @Getter @Setter
     private float radius;
     @Getter @Setter
+    private float height;
+    @Getter @Setter
     private OpenGLColor color;
     @Getter
-    private final String type = "Sphere";
+    private final String type = "Cylinder";
 
-    public Sphere(Vec3 center, float radius, OpenGLColor color) {
+    public Cylinder(Vec3 center, float radius, float height, OpenGLColor color) {
         this.center = center;
         this.radius = radius;
         this.color = color;
+        this.height = height;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class Sphere extends GLObject {
         gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glColor3f(color.getR(), color.getG(), color.getB());
         GLUquadric q = glu.gluNewQuadric();
-        glu.gluSphere(q, radius, 100, 100);
+        glu.gluCylinder(q, radius, radius, height, 100, 100);
 
     }
 }

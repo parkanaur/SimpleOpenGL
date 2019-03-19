@@ -52,7 +52,6 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     @Getter @Setter
     private GLNode root;
 
-
     public OpenGLViewer(GLCanvas canvas) {
         glu = new GLU();
         this.canvas = canvas;
@@ -74,13 +73,15 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         gl.glShadeModel(gl.GL_FLAT);
 
         // Lighting setup
-        /*
+
         gl.glEnable(gl.GL_LIGHTING);
         gl.glEnable(gl.GL_COLOR_MATERIAL);
         gl.glColorMaterial(gl.GL_FRONT_AND_BACK, gl.GL_AMBIENT_AND_DIFFUSE);
         float[] ambColor = new float[] {0.5f, 0.5f, 0.5f, 1};
         gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambColor, 0);
-        gl.glEnable(gl.GL_NORMALIZE);*/
+        gl.glEnable(gl.GL_NORMALIZE);
+
+        gl.glEnable(gl.GL_LIGHT0);
 
         gl.glEnable(gl.GL_DEPTH_TEST);
 
@@ -105,6 +106,8 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClear (gl.GL_COLOR_BUFFER_BIT |  gl.GL_DEPTH_BUFFER_BIT );
 
+
+
         // ---scene render---
         gl.glPushMatrix();
 
@@ -124,6 +127,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
             root.drawTree(gl);
             gl.glPopMatrix();
         }
+
 
         /*labelRenderer.begin3DRendering();
         for (GLObject light : lights) {

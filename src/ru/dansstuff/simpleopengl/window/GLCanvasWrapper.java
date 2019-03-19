@@ -38,6 +38,8 @@ public class GLCanvasWrapper {
                 .registerSubtype(Box.class, "Box")
                 .registerSubtype(Triangle.class, "Triangle")
                 .registerSubtype(Sphere.class, "Sphere")
+                .registerSubtype(DirectionalLight.class, "DirectionalLight")
+                .registerSubtype(Cylinder.class, "Cylinder")
                 .registerSubtype(Line.class, "Line");
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(rFactory).create();
 
