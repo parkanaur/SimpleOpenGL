@@ -4,7 +4,6 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import ru.dansstuff.simpleopengl.math.*;
 
-@NoArgsConstructor
 public class DirectionalLight extends GLObject {
     @Getter @Setter
     private Vec4 color;
@@ -14,6 +13,12 @@ public class DirectionalLight extends GLObject {
     private int index;
     @Getter
     private final String type = "DirectionalLight";
+
+    public DirectionalLight() {
+        this.color = new Vec4(1, 1, 1, 1);
+        this.pos = new Vec4(0, 0, -5, 0);
+        this.index = 0;
+    }
 
     public DirectionalLight(Vec4 color, Vec4 pos, int index) {
         this.color = color;

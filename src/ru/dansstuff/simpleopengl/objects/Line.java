@@ -4,15 +4,25 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class Line extends GLObject {
-    @Getter @Setter @NonNull
+    @Getter @Setter
     private Vec3 p1, p2;
-    @Getter @Setter @NonNull
+    @Getter @Setter
     private OpenGLColor color;
     @Getter
     private final String type = "Line";
+
+    public Line() {
+        this.p1 = new Vec3(0, 0, 0);
+        this.p2 = new Vec3(1, 0, 0);
+        this.color = OpenGLColor.WHITE;
+    }
+
+    public Line(Vec3 p1, Vec3 p2, OpenGLColor color) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.color = color;
+    }
 
     public void draw(GL2 gl) {
         gl.glBegin(GL2.GL_LINES);

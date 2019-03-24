@@ -1,5 +1,8 @@
 package ru.dansstuff.simpleopengl.window;
 
+import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
+import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +11,7 @@ import java.io.FileNotFoundException;
 
 public class OpenGLTestFramePopupMenu extends JPopupMenu {
 
-    public OpenGLTestFramePopupMenu(GLCanvasWrapper glCanvasWrapper) {
+    public OpenGLTestFramePopupMenu(OpenGLViewer viewer) {
         JMenuItem loadSceneItem = new JMenuItem("Load scene...");
         loadSceneItem.addActionListener(new ActionListener() {
             @Override
@@ -17,7 +20,7 @@ public class OpenGLTestFramePopupMenu extends JPopupMenu {
 
                 if (fc.showOpenDialog(OpenGLTestFramePopupMenu.this) == JFileChooser.APPROVE_OPTION) {
                     try {
-                        glCanvasWrapper.getViewer().setRoot(glCanvasWrapper.parseTree(fc.getSelectedFile()));
+                        viewer.setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
                     }
                     catch (FileNotFoundException ex) {
                         ex.printStackTrace();
@@ -31,7 +34,7 @@ public class OpenGLTestFramePopupMenu extends JPopupMenu {
         enableViewerItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                glCanvasWrapper.getViewer().setEnabled(!glCanvasWrapper.getViewer().isEnabled());
+                viewer.setEnabled(!viewer.isEnabled());
             }
         });
         add(enableViewerItem);
@@ -40,7 +43,7 @@ public class OpenGLTestFramePopupMenu extends JPopupMenu {
         showAxisItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                glCanvasWrapper.getViewer().setDrawAxis(!glCanvasWrapper.getViewer().isDrawAxis());
+                viewer.setDrawAxis(!viewer.isDrawAxis());
             }
         });
         add(showAxisItem);

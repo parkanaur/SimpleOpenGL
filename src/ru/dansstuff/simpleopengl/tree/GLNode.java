@@ -9,7 +9,6 @@ import ru.dansstuff.simpleopengl.objects.GLObject;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 public class GLNode {
     @Getter @Setter
     private String id;
@@ -17,6 +16,11 @@ public class GLNode {
     private GLObject glObject;
     @Getter @Setter
     private List<GLNode> children;
+
+    public GLNode() {
+        this.id = "0";
+        this.children = new ArrayList<>();
+    }
 
     public GLNode(String id, GLObject glObject) {
         this.id = id;

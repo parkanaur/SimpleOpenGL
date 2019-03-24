@@ -6,11 +6,16 @@ import lombok.Setter;
 
 import java.util.Random;
 
-@NoArgsConstructor
 public class OpenGLColor {
     @Getter @Setter
     private float r, g, b;
     private static Random random = new Random();
+
+    public OpenGLColor() {
+        this.r = 1;
+        this.g = 1;
+        this.b = 1;
+    }
 
     public OpenGLColor(float r, float g, float b) {
         this.r = r;
@@ -24,7 +29,7 @@ public class OpenGLColor {
     public static final OpenGLColor WHITE = new OpenGLColor(1, 1, 1);
 
     public static final OpenGLColor[] COLORS = {
-            RED, GREEN, BLUE
+            RED, GREEN, BLUE, WHITE
     };
 
     public static OpenGLColor getRandomColor() {

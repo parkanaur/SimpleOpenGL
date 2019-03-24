@@ -4,15 +4,27 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class Triangle extends GLObject {
-    @Getter @Setter @NonNull
+    @Getter @Setter
     private Vec3 p1, p2, p3;
-    @Getter @Setter @NonNull
+    @Getter @Setter
     private OpenGLColor color;
     @Getter
     private final String type = "Triangle";
+
+    public Triangle() {
+        this.p1 = new Vec3(0, 0, 0);
+        this.p2 = new Vec3(1, 0, 0);
+        this.p3 = new Vec3(0, 1, 0);
+        this.color = OpenGLColor.WHITE;
+    }
+
+    public Triangle(Vec3 p1, Vec3 p2, Vec3 p3, OpenGLColor color) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.p3 = p3;
+        this.color = OpenGLColor.WHITE;
+    }
 
     public void draw(GL2 gl) {
         gl.glBegin(GL2.GL_TRIANGLES);

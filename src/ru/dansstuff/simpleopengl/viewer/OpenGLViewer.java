@@ -6,14 +6,14 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.awt.TextRenderer;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.operations.Translation;
 import ru.dansstuff.simpleopengl.tree.GLNode;
+import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLViewerKeyListener;
+import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLViewerMouseWheelListener;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -22,14 +22,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@NoArgsConstructor
-public class OpenGLViewer implements GLEventListener, Serializable {
+public class OpenGLViewer extends GLCanvas implements GLEventListener, Serializable {
     @Getter @Setter
     private GL2 gl;
     @Getter @Setter
     private GLU glu;
-    @Getter @Setter
-    private GLCanvas canvas;
+
     private TextRenderer textRenderer;
     private TextRenderer labelRenderer;
 
@@ -52,9 +50,8 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     @Getter @Setter
     private GLNode root;
 
-    public OpenGLViewer(GLCanvas canvas) {
+    public OpenGLViewer() {
         glu = new GLU();
-        this.canvas = canvas;
         textRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
         labelRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
 
@@ -64,11 +61,16 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
         axis = getAxis();
         pendingOperations = new ConcurrentLinkedQueue<>();
+
+        addKeyListener(new OpenGLViewerKeyListener(this));
+        addMouseWheelListener(new OpenGLViewerMouseWheelListener(this));
+        addGLEventListener(this);
     }
 
     @Override
     public void init(GLAutoDrawable glAutoDrawable) {
         gl = glAutoDrawable.getGL().getGL2();
+        glu = GLU.createGLU(gl);
         gl.glClearColor(0, 0, 0, 0);
         gl.glShadeModel(gl.GL_FLAT);
 
@@ -86,7 +88,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         gl.glEnable(gl.GL_DEPTH_TEST);
 
         gl.glMatrixMode(gl.GL_PROJECTION);
-        glu.gluPerspective(45.0f,  (double)canvas.getSize().width / canvas.getSize().height, 0.1f, 1000f);
+        glu.gluPerspective(45.0f,  (double)getSize().width / getSize().height, 0.1f, 1000f);
         gl.glMatrixMode(gl.GL_MODELVIEW);
 
         moveBackward(5);
@@ -105,8 +107,6 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClear (gl.GL_COLOR_BUFFER_BIT |  gl.GL_DEPTH_BUFFER_BIT );
-
-
 
         // ---scene render---
         gl.glPushMatrix();
@@ -127,15 +127,6 @@ public class OpenGLViewer implements GLEventListener, Serializable {
             root.drawTree(gl);
             gl.glPopMatrix();
         }
-
-
-        /*labelRenderer.begin3DRendering();
-        for (GLObject light : lights) {
-            light.draw(gl);
-            float[] pos = ((DirectionalLight)light).pos;
-            labelRenderer.draw3D(String.format("light %.02f %.02f %.02f", pos[0], pos[1], pos[2]), pos[0], pos[1], pos[2], 0.01f);
-        }
-        labelRenderer.end3DRendering();*/
 
         gl.glPopMatrix();
         // ---scene render end---
@@ -180,9 +171,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
     public void drawDebugText(GLAutoDrawable drawable) {
         if (root != null) {
-            textRenderer.beginRendering(canvas.getWidth(), canvas.getHeight());
-            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.getX(), rotn.getY(), rotn.getZ()), 10, canvas.getHeight() - 15);
-            textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, canvas.getHeight() - 30);
+            textRenderer.beginRendering(getWidth(), getHeight());
+            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.getX(), rotn.getY(), rotn.getZ()), 10, getHeight() - 15);
+            textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, getHeight() - 30);
             //textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, canvas.getHeight() - 30);
             textRenderer.endRendering();
         }
@@ -249,4 +240,6 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         center = new Vec3(0 ,0, -6);
         rotn = new Vec3(15, 45, 0);
     }
+
+
 }

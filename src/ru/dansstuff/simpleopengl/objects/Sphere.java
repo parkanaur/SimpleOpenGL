@@ -6,7 +6,6 @@ import com.jogamp.opengl.glu.GLUquadric;
 import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@NoArgsConstructor
 public class Sphere extends GLObject {
     @Getter @Setter
     private Vec3 center;
@@ -16,6 +15,12 @@ public class Sphere extends GLObject {
     private OpenGLColor color;
     @Getter
     private final String type = "Sphere";
+
+    public Sphere() {
+        this.center = new Vec3(0, 0, 0);
+        this.radius = 1;
+        this.color = OpenGLColor.WHITE;
+    }
 
     public Sphere(Vec3 center, float radius, OpenGLColor color) {
         this.center = center;

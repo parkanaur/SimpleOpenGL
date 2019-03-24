@@ -4,7 +4,6 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
-@NoArgsConstructor
 public class Box extends GLObject {
     @Getter @Setter
     private Vec3 center;
@@ -14,6 +13,12 @@ public class Box extends GLObject {
     private OpenGLColor color;
     @Getter
     private final String type = "Box";
+
+    public Box() {
+        center = new Vec3(0, 0, 0);
+        length = 1;
+        color = OpenGLColor.WHITE;
+    }
 
     public Box(Vec3 center, float length, OpenGLColor color) {
         this.center = center;
