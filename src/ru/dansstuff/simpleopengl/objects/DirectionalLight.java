@@ -2,28 +2,39 @@ package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.*;
 
+@Builder
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class DirectionalLight extends GLObject {
-    @Getter @Setter
+    @Getter
     private Vec4 color;
     @Getter @Setter
     private Vec4 pos;
-    @Getter
+    @Getter @Setter
     private int index;
-    @Getter
-    private final String type = "DirectionalLight";
+
+    public DirectionalLight setColor(Vec4 color) {
+        this.color = color;
+        return this;
+    }
+
+    public DirectionalLight setColor(OpenGLColor color) {
+        this.color = new Vec4(color.getR(), color.getG(), color.getB(), this.color.getW());
+        return this;
+    }
 
     public DirectionalLight() {
-        this.color = new Vec4(1, 1, 1, 1);
-        this.pos = new Vec4(0, 0, -5, 0);
-        this.index = 0;
+        this(new Vec4(1, 1, 1, 1), new Vec4(0, 0, -5, 0), 0);
     }
 
     public DirectionalLight(Vec4 color, Vec4 pos, int index) {
         this.color = color;
         this.pos = pos;
         this.index = index;
+        //this.type = "DirectionalLight";
     }
 
     @Override

@@ -4,8 +4,12 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
+@Builder
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class Sphere extends GLObject {
     @Getter @Setter
     private Vec3 center;
@@ -13,19 +17,16 @@ public class Sphere extends GLObject {
     private float radius;
     @Getter @Setter
     private OpenGLColor color;
-    @Getter
-    private final String type = "Sphere";
 
     public Sphere() {
-        this.center = new Vec3(0, 0, 0);
-        this.radius = 1;
-        this.color = OpenGLColor.WHITE;
+        this(new Vec3(0, 0, 0), 1, OpenGLColor.WHITE);
     }
 
     public Sphere(Vec3 center, float radius, OpenGLColor color) {
         this.center = center;
         this.radius = radius;
         this.color = color;
+        //this.type = "Sphere";
     }
 
     @Override

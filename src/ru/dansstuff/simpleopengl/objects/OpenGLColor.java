@@ -1,20 +1,25 @@
 package ru.dansstuff.simpleopengl.objects;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
+import ru.dansstuff.simpleopengl.math.Vec3;
 
 import java.util.Random;
 
+@Builder
+@Accessors(chain = true)
+@EqualsAndHashCode
 public class OpenGLColor {
     @Getter @Setter
     private float r, g, b;
-    private static Random random = new Random();
+    private transient static Random random = new Random();
 
     public OpenGLColor() {
-        this.r = 1;
-        this.g = 1;
-        this.b = 1;
+        this(1, 1, 1);
+    }
+
+    public OpenGLColor(Vec3 color) {
+        this(color.getX(), color.getY(), color.getZ());
     }
 
     public OpenGLColor(float r, float g, float b) {

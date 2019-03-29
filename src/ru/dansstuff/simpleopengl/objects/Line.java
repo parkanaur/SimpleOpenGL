@@ -2,26 +2,27 @@ package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
+@Builder
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class Line extends GLObject {
     @Getter @Setter
     private Vec3 p1, p2;
     @Getter @Setter
     private OpenGLColor color;
-    @Getter
-    private final String type = "Line";
 
     public Line() {
-        this.p1 = new Vec3(0, 0, 0);
-        this.p2 = new Vec3(1, 0, 0);
-        this.color = OpenGLColor.WHITE;
+        this(new Vec3(0, 0, 0), new Vec3(1, 0, 0), OpenGLColor.WHITE);
     }
 
     public Line(Vec3 p1, Vec3 p2, OpenGLColor color) {
         this.p1 = p1;
         this.p2 = p2;
         this.color = color;
+        //this.type = "Line";
     }
 
     public void draw(GL2 gl) {

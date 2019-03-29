@@ -1,8 +1,11 @@
 package ru.dansstuff.simpleopengl.math;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 @NoArgsConstructor
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class Vec4 {
    @Getter @Setter
    private float x, y, z, w;

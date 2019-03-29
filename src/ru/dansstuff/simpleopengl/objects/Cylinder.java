@@ -4,8 +4,12 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
+@Builder
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class Cylinder extends GLObject {
     @Getter @Setter
     private Vec3 center;
@@ -15,14 +19,9 @@ public class Cylinder extends GLObject {
     private float height;
     @Getter @Setter
     private OpenGLColor color;
-    @Getter
-    private final String type = "Cylinder";
 
     public Cylinder() {
-        this.center = new Vec3(0, 0, 0);
-        this.radius = 1;
-        this.height = 1;
-        this.color = OpenGLColor.WHITE;
+        this(new Vec3(0, 0, 0), 1, 1, OpenGLColor.WHITE);
     }
 
     public Cylinder(Vec3 center, float radius, float height, OpenGLColor color) {
@@ -30,6 +29,7 @@ public class Cylinder extends GLObject {
         this.radius = radius;
         this.color = color;
         this.height = height;
+        //this.type = "Cylinder";
     }
 
     @Override

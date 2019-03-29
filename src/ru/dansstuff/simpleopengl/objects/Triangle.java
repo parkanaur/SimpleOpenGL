@@ -2,21 +2,20 @@ package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
+@Builder
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
 public class Triangle extends GLObject {
     @Getter @Setter
     private Vec3 p1, p2, p3;
     @Getter @Setter
     private OpenGLColor color;
-    @Getter
-    private final String type = "Triangle";
 
     public Triangle() {
-        this.p1 = new Vec3(0, 0, 0);
-        this.p2 = new Vec3(1, 0, 0);
-        this.p3 = new Vec3(0, 1, 0);
-        this.color = OpenGLColor.WHITE;
+        this(new Vec3(0, 0, 0), new Vec3(1, 0, 0), new Vec3(0, 1, 0), OpenGLColor.WHITE);
     }
 
     public Triangle(Vec3 p1, Vec3 p2, Vec3 p3, OpenGLColor color) {
@@ -24,6 +23,7 @@ public class Triangle extends GLObject {
         this.p2 = p2;
         this.p3 = p3;
         this.color = OpenGLColor.WHITE;
+        //this.type = "Triangle";
     }
 
     public void draw(GL2 gl) {
