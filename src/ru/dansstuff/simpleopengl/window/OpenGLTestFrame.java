@@ -2,6 +2,7 @@ package ru.dansstuff.simpleopengl.window;
 
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.Animator;
+import com.jogamp.opengl.util.FPSAnimator;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
@@ -49,69 +50,69 @@ public class OpenGLTestFrame
     private void initViewer() {
         viewer = new OpenGLViewer();
         viewer.setSize(width, height);
-        viewer.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                viewer.scale(e.getWheelRotation());
-            }
-        });
-        viewer.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                curPos.x = -1;
-                curPos.y = -1;
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                curPos.x = -1;
-                curPos.y = -1;
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-        viewer.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                if (e.getX() != curPos.x) {
-                    if (curPos.x != -1)
-                        viewer.rotLeft((e.getX() - curPos.x) * 0.1f);
-                }
-                if (e.getY() != curPos.y) {
-                    if (curPos.y != -1)
-                        viewer.rotUp((e.getY() - curPos.y) * 0.1f);
-                }
-                curPos.x = e.getX();
-                curPos.y = e.getY();
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-
-            }
-        });
-        viewer.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    OpenGLTestFramePopupMenu menu = new OpenGLTestFramePopupMenu(viewer);
-                    menu.show(e.getComponent(), e.getX(), e.getY());
-                }
-            }
-        });
+//        viewer.addMouseWheelListener(new MouseWheelListener() {
+//            @Override
+//            public void mouseWheelMoved(MouseWheelEvent e) {
+//                viewer.scale(e.getWheelRotation());
+//            }
+//        });
+//        viewer.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                curPos.x = -1;
+//                curPos.y = -1;
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//                curPos.x = -1;
+//                curPos.y = -1;
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//
+//            }
+//        });
+//        viewer.addMouseMotionListener(new MouseMotionListener() {
+//            @Override
+//            public void mouseDragged(MouseEvent e) {
+//                if (e.getX() != curPos.x) {
+//                    if (curPos.x != -1)
+//                        viewer.rotLeft((e.getX() - curPos.x) * 0.1f);
+//                }
+//                if (e.getY() != curPos.y) {
+//                    if (curPos.y != -1)
+//                        viewer.rotUp((e.getY() - curPos.y) * 0.1f);
+//                }
+//                curPos.x = e.getX();
+//                curPos.y = e.getY();
+//            }
+//
+//            @Override
+//            public void mouseMoved(MouseEvent e) {
+//
+//            }
+//        });
+//        viewer.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//                if (e.isPopupTrigger()) {
+//                    OpenGLTestFramePopupMenu menu = new OpenGLTestFramePopupMenu(viewer);
+//                    menu.show(e.getComponent(), e.getX(), e.getY());
+//                }
+//            }
+//        });
         add(viewer, BorderLayout.WEST);
     }
 

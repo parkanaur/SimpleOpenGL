@@ -6,23 +6,25 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.util.awt.TextRenderer;
+import com.jogamp.opengl.util.gl2.GLUT;
 import lombok.*;
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.operations.Translation;
-import ru.dansstuff.simpleopengl.tree.GLNode;
 import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLViewerKeyListener;
 import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLViewerMouseWheelListener;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class OpenGLViewer extends GLCanvas implements GLEventListener, Serializable {
+public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventListener, Serializable {
     @Getter @Setter
     private GL2 gl;
     @Getter @Setter
@@ -48,7 +50,7 @@ public class OpenGLViewer extends GLCanvas implements GLEventListener, Serializa
     private Queue<OpenGLOperation> pendingOperations;
 
     @Getter @Setter
-    private GLNode root;
+    private GLObject root;
 
     public OpenGLViewer() {
         glu = new GLU();
@@ -63,6 +65,8 @@ public class OpenGLViewer extends GLCanvas implements GLEventListener, Serializa
         pendingOperations = new ConcurrentLinkedQueue<>();
 
         addKeyListener(new OpenGLViewerKeyListener(this));
+
+        addMouseListener(this);
         addMouseWheelListener(new OpenGLViewerMouseWheelListener(this));
         addGLEventListener(this);
     }
@@ -234,7 +238,7 @@ public class OpenGLViewer extends GLCanvas implements GLEventListener, Serializa
     }
 
     public void clear() {
-        root.clearChildren();
+        root.clear();
         root = null;
         cam = new Vec3(0, 0, -1);
         center = new Vec3(0 ,0, -6);
@@ -242,4 +246,28 @@ public class OpenGLViewer extends GLCanvas implements GLEventListener, Serializa
     }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        drawAxis = !drawAxis;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        drawAxis = !drawAxis;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
