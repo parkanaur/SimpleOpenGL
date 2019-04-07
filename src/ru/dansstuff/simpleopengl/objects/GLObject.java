@@ -36,12 +36,11 @@ public abstract class GLObject implements Serializable {
         children.add(index, child);
     }
 
-    public void resolveTexturesForTree() throws IOException {
-        Map<String, Texture> textureMap = new HashMap<>();
+    public void resolveTexturesForTree(Map<String, Texture> textureMap) throws IOException {
         resolveTexture(textureMap);
 
         for (GLObject child : children) {
-            child.resolveTexturesForTree();
+            child.resolveTexturesForTree(textureMap);
         }
     }
 

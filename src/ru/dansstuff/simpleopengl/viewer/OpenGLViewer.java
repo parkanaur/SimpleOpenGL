@@ -17,6 +17,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -115,7 +116,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
         if (needTextureResolution) {
             try {
-                root.resolveTexturesForTree();
+                root.resolveTexturesForTree(new HashMap<>());
             }
             catch (IOException ex) {
                 ex.printStackTrace();
