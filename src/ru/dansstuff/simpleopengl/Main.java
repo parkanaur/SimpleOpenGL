@@ -6,6 +6,7 @@ import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
 import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.window.OpenGLTestFrame;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
@@ -13,7 +14,7 @@ import java.util.Random;
 
 public class Main {
     static Random random = new Random();
-    static boolean fileUsed = true;
+    static boolean fileUsed = false;
 
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         OpenGLTestFrame frame = new OpenGLTestFrame(1600, 900);
@@ -33,9 +34,8 @@ public class Main {
             System.out.println(SceneFileHelper.getSceneJson(root));
         }
 
-        frame.getViewer().setRoot(root);
-        frame.getViewer().setDrawAxis(true);
-        frame.getViewer().setEnabled(true);
-        frame.getViewer().requestFocusInWindow();
+        frame.getCanvas().getViewer().setRoot(root);
+        frame.getCanvas().getViewer().setDrawAxis(true);
+        frame.getCanvas().getViewer().setEnabled(true);
     }
 }

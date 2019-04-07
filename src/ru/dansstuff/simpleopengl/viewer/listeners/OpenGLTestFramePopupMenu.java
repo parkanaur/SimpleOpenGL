@@ -1,4 +1,4 @@
-package ru.dansstuff.simpleopengl.window;
+package ru.dansstuff.simpleopengl.viewer.listeners;
 
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
@@ -6,7 +6,6 @@ import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
 
 public class OpenGLTestFramePopupMenu extends JPopupMenu {

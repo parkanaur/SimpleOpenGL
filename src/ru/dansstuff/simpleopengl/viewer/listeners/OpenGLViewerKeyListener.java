@@ -17,6 +17,9 @@ public class OpenGLViewerKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (viewer == null) {
+            return;
+        }
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_W:

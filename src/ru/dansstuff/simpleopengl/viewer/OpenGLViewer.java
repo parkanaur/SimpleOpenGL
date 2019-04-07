@@ -12,19 +12,15 @@ import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.operations.Translation;
-import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLViewerKeyListener;
-import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLViewerMouseWheelListener;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventListener, Serializable {
+public class OpenGLViewer implements GLEventListener, Serializable {
     @Getter @Setter
     private GL2 gl;
     @Getter @Setter
@@ -33,8 +29,13 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
     private TextRenderer textRenderer;
     private TextRenderer labelRenderer;
 
+   // @Getter @Setter
+   // private Dimension size;
+
     @Getter @Setter
     private Vec3 cam;
+    @Getter @Setter
+    private Point curMousePos;
     @Getter @Setter
     private Vec3 rotn;
     @Getter @Setter
@@ -58,17 +59,12 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
         labelRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
 
         cam = new Vec3(0, 0, -1);
+        curMousePos = new Point(-1, -1);
         rotn = new Vec3(15, 45, 0);
         center = new Vec3(0 ,0, -6);
 
         axis = getAxis();
         pendingOperations = new ConcurrentLinkedQueue<>();
-
-        addKeyListener(new OpenGLViewerKeyListener(this));
-
-        addMouseListener(this);
-        addMouseWheelListener(new OpenGLViewerMouseWheelListener(this));
-        addGLEventListener(this);
     }
 
     @Override
@@ -92,7 +88,7 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
         gl.glEnable(gl.GL_DEPTH_TEST);
 
         gl.glMatrixMode(gl.GL_PROJECTION);
-        glu.gluPerspective(45.0f,  (double)getSize().width / getSize().height, 0.1f, 1000f);
+        glu.gluPerspective(45.0f,  (double)glAutoDrawable.getSurfaceWidth() / (double)glAutoDrawable.getSurfaceHeight(), 0.1f, 1000f);
         gl.glMatrixMode(gl.GL_MODELVIEW);
 
         moveBackward(5);
@@ -124,6 +120,11 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
             for (GLObject ax : axis) {
                 ax.draw(gl);
             }
+            labelRenderer.begin3DRendering();
+            labelRenderer.draw3D("X", 3.2f, 0, 0, 0.05f);
+            labelRenderer.draw3D("Y", 0, 3.2f, 0, 0.05f);
+            labelRenderer.draw3D("Z", 0, 0, 3.2f, 0.05f);
+            labelRenderer.end3DRendering();
         }
 
         if (root != null) {
@@ -141,7 +142,6 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
         }
 
         drawDebugText(drawable);
-
     }
 
     public List<GLObject> getAxis() {
@@ -175,9 +175,11 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
 
     public void drawDebugText(GLAutoDrawable drawable) {
         if (root != null) {
-            textRenderer.beginRendering(getWidth(), getHeight());
-            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.getX(), rotn.getY(), rotn.getZ()), 10, getHeight() - 15);
-            textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, getHeight() - 30);
+            textRenderer.beginRendering(drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
+            textRenderer.setColor(Color.WHITE);
+            textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.getX(), rotn.getY(), rotn.getZ()), 10, drawable.getSurfaceHeight() - 15);
+            textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, drawable.getSurfaceHeight() - 30);
+            textRenderer.draw(String.format("mouse pos: %d %d", curMousePos.x, curMousePos.y), 10, drawable.getSurfaceHeight() - 45);
             //textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, canvas.getHeight() - 30);
             textRenderer.endRendering();
         }
@@ -243,31 +245,5 @@ public class OpenGLViewer extends GLCanvas implements MouseListener, GLEventList
         cam = new Vec3(0, 0, -1);
         center = new Vec3(0 ,0, -6);
         rotn = new Vec3(15, 45, 0);
-    }
-
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        drawAxis = !drawAxis;
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        drawAxis = !drawAxis;
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }
