@@ -10,9 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Accessors(chain = true)
 public abstract class GLObject implements Serializable {
     public abstract void draw(GL2 gl);
 
@@ -22,18 +23,47 @@ public abstract class GLObject implements Serializable {
     protected List<GLObject> children = new ArrayList<>();
     @Getter
     protected String type = getClass().getSimpleName();
-    @Getter
+    @Getter @Setter
     protected String textureFile;
-    @Getter
+    @Getter @Setter
     protected Texture texture;
 
-    public void setTextureFile(String file) throws IOException {
-        File f = new File(file);
-        texture = TextureIO.newTexture(f, true);
+    public GLObject getChildren(int index) {
+        return children.get(index);
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public void setChildren(int index, GLObject child) {
+        children.add(index, child);
+    }
+
+    public void resolveTexturesForTree() throws IOException {
+        Map<String, Texture> textureMap = new HashMap<>();
+        resolveTexture(textureMap);
+
+        for (GLObject child : children) {
+            child.resolveTexturesForTree();
+        }
+    }
+
+    private Texture getTextureFromFile(File file) throws IOException {
+        if (file.exists()) {
+            return TextureIO.newTexture(file, true);
+        }
+        return null;
+    }
+
+    public void resolveTexture(Map<String, Texture> textureMap) throws IOException {
+        if (textureFile == null) {
+            return;
+        }
+
+        if (textureMap.containsKey(textureFile)) {
+            texture = textureMap.get(textureFile);
+            return;
+        }
+
+        texture = getTextureFromFile(new File(textureFile));
+        textureMap.put(textureFile, texture);
     }
 
     public void addChild(GLObject child) {

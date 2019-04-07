@@ -46,5 +46,14 @@ public class OpenGLTestFramePopupMenu extends JPopupMenu {
             }
         });
         add(showAxisItem);
+
+        JMenuItem resolveTexturesItem = new JMenuItem("Resolve textures");
+        showAxisItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewer.setNeedTextureResolution(true);
+            }
+        });
+        add(resolveTexturesItem);
     }
 }

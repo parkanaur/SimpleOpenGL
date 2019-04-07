@@ -14,6 +14,7 @@ import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.operations.Translation;
 
 import java.awt.*;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     @Getter @Setter
     private boolean enabled = false;
 
+    @Getter @Setter
+    private boolean needTextureResolution = true;
+
     private List<GLObject> axis;
     private Queue<OpenGLOperation> pendingOperations;
 
@@ -75,17 +79,18 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         gl.glShadeModel(gl.GL_FLAT);
 
         // Lighting setup
-
         gl.glEnable(gl.GL_LIGHTING);
+        gl.glEnable(gl.GL_LIGHT0);
         gl.glEnable(gl.GL_COLOR_MATERIAL);
+        gl.glEnable(gl.GL_NORMALIZE);
+
         gl.glColorMaterial(gl.GL_FRONT_AND_BACK, gl.GL_AMBIENT_AND_DIFFUSE);
         float[] ambColor = new float[] {0.5f, 0.5f, 0.5f, 1};
         gl.glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT, ambColor, 0);
-        gl.glEnable(gl.GL_NORMALIZE);
-
-        gl.glEnable(gl.GL_LIGHT0);
 
         gl.glEnable(gl.GL_DEPTH_TEST);
+
+        gl.glEnable(gl.GL_TEXTURE_2D);
 
         gl.glMatrixMode(gl.GL_PROJECTION);
         glu.gluPerspective(45.0f,  (double)glAutoDrawable.getSurfaceWidth() / (double)glAutoDrawable.getSurfaceHeight(), 0.1f, 1000f);
@@ -108,6 +113,16 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClear (gl.GL_COLOR_BUFFER_BIT |  gl.GL_DEPTH_BUFFER_BIT );
 
+        if (needTextureResolution) {
+            try {
+                root.resolveTexturesForTree();
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            needTextureResolution = false;
+        }
+
         // ---scene render---
         gl.glPushMatrix();
 
@@ -129,6 +144,8 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
         if (root != null) {
             gl.glPushMatrix();
+            gl.glRotatef(-90, 1, 0, 0);
+
             root.drawTree(gl);
             gl.glPopMatrix();
         }
