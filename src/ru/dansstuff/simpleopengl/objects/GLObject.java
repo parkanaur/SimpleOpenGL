@@ -1,13 +1,16 @@
 package ru.dansstuff.simpleopengl.objects;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureIO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Accessors(chain = true)
 public abstract class GLObject implements Serializable {
@@ -19,6 +22,19 @@ public abstract class GLObject implements Serializable {
     protected List<GLObject> children = new ArrayList<>();
     @Getter
     protected String type = getClass().getSimpleName();
+    @Getter
+    protected String textureFile;
+    @Getter
+    protected Texture texture;
+
+    public void setTextureFile(String file) throws IOException {
+        File f = new File(file);
+        texture = TextureIO.newTexture(f, true);
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
 
     public void addChild(GLObject child) {
         children.add(child);
