@@ -7,7 +7,6 @@ import ru.dansstuff.simpleopengl.math.Vec3;
 import java.util.Random;
 
 @Builder
-@Accessors(chain = true)
 @EqualsAndHashCode
 public class OpenGLColor {
     @Getter @Setter

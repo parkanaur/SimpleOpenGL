@@ -6,7 +6,6 @@ import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
 @Builder
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class Triangle extends GLObject {
     @Getter @Setter

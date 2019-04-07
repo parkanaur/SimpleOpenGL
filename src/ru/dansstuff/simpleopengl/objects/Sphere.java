@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 
 @Builder
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class Sphere extends GLObject {
     @Getter @Setter
@@ -36,7 +35,11 @@ public class Sphere extends GLObject {
         gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glColor3f(color.getR(), color.getG(), color.getB());
         GLUquadric q = glu.gluNewQuadric();
+        if (texture != null) {
+            glu.gluQuadricTexture(q, true);
+            gl.glBindTexture(gl.GL_TEXTURE_2D, texture.getTextureObject(gl));
+        }
         glu.gluSphere(q, radius, 100, 100);
-
+        glu.gluDeleteQuadric(q);
     }
 }

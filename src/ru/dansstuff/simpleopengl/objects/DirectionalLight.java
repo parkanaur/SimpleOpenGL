@@ -6,7 +6,6 @@ import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.*;
 
 @Builder
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class DirectionalLight extends GLObject {
     @Getter

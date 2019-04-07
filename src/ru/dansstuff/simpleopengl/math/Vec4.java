@@ -4,7 +4,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 @NoArgsConstructor
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public class Vec4 {
    @Getter @Setter
