@@ -64,6 +64,24 @@
     <orderEntry type="library" exported="" name="gluegen-java-src" level="project" />
     <orderEntry type="library" exported="" name="jogl-java-src" level="project" />
     <orderEntry type="library" name="lombok" level="project" />
-    <orderEntry type="library" name="gson-2.8.5" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.8.5" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/gluegen-rt-natives-macosx-universal.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jogl-all-natives-macosx-universal.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

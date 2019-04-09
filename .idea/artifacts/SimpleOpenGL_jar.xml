@@ -13,6 +13,8 @@
       <element id="library" level="project" name="jogl-java-src" />
       <element id="library" level="project" name="lombok" />
       <element id="library" level="project" name="gson-2.8.5" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/gluegen-rt-natives-macosx-universal.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jogl-all-natives-macosx-universal.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
