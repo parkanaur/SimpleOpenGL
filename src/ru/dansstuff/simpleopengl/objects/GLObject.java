@@ -105,6 +105,7 @@ public abstract class GLObject implements Serializable {
     }
 
     public static Class[] getObjectTypes() {
-        return new Class[] {Box.class, Cylinder.class, DirectionalLight.class, Line.class, Sphere.class, Triangle.class};
+        return new Class[] {Box.class, Cylinder.class, DirectionalLight.class,
+                Line.class, Sphere.class, Triangle.class, EmptyObject.class};
     }
 }

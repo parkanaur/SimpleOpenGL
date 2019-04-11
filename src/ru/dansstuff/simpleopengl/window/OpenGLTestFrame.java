@@ -4,6 +4,7 @@ import com.jogamp.opengl.util.Animator;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
+import ru.dansstuff.simpleopengl.objects.EmptyObject;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
@@ -25,7 +26,9 @@ public class OpenGLTestFrame
     @Getter @Setter
     private GLViewerCanvas canvas;
 
-    private final double editorPanelWidth = 0.25;
+    private GLObject currentObject;
+
+    private final double editorPanelCoef = 0.2;
 
     public void setWidth(int width) {
         this.width = width;
@@ -39,6 +42,8 @@ public class OpenGLTestFrame
 
     public OpenGLTestFrame(int width, int height) {
         canvas = new GLViewerCanvas();
+        canvas.getViewer().setRoot(new EmptyObject());
+        currentObject = canvas.getViewer().getRoot();
         setWidth(width);
         setHeight(height);
         setSize(width, height);
@@ -53,7 +58,7 @@ public class OpenGLTestFrame
 
     private void initWindow() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width - width) / 2, (screenSize.height - height) / 2, (int)(width * (1 + editorPanelWidth)), height);
+        setBounds((screenSize.width - width) / 2, (screenSize.height - height) / 2, (int)(width * (1 + editorPanelCoef)), height);
 
         setTitle(this.getClass().getSimpleName());
 
@@ -65,29 +70,44 @@ public class OpenGLTestFrame
         initEditorArea();
     }
 
+    private JButton loadBtn;
+    private JButton saveBtn;
+
+    private JComboBox<Class> objectChooserBox;
+    private JButton addObjectBtn;
+
+    private JList<GLObject> objectJList;
+    private DefaultListModel<GLObject> objectList;
+
     private void initEditorArea() {
-        JPanel editorPanel = new JPanel(new BorderLayout());
-        editorPanel.setSize((int)(width * editorPanelWidth), height);
+        int editorPanelWidth = (int)(width * editorPanelCoef);
+        JPanel editorPanel = new JPanel();
+        editorPanel.setPreferredSize(new Dimension(editorPanelWidth, height));
+       // editorPanel.setLayout(new BoxLayout(editorPanel, BoxLayout.Y_AXIS));
 
-        // --- load/save panel ---
-        JPanel loadSavePanel = new JPanel();
+        // --- load/save row ---
 
-        JButton loadBtn = new JButton("Load scene...");
+        loadBtn = new JButton("Load scene...");
+        Dimension lbSize = loadBtn.getPreferredSize();
         loadBtn.addActionListener(e -> {
             final JFileChooser fc = new JFileChooser();
 
             if (fc.showOpenDialog(OpenGLTestFrame.this) == JFileChooser.APPROVE_OPTION) {
                 try {
                     canvas.getViewer().setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
+                    objectList.clear();
+                    for (GLObject obj : canvas.getViewer().getRoot().getTreeAsList()) {
+                        objectList.addElement(obj);
+                    }
                 }
                 catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
             }
         });
-        loadSavePanel.add(loadBtn);
+        editorPanel.add(loadBtn);
 
-        JButton saveBtn = new JButton("Save scene...");
+        saveBtn = new JButton("Save scene...");
         saveBtn.addActionListener(e -> {
             final JFileChooser fc = new JFileChooser();
 
@@ -100,20 +120,29 @@ public class OpenGLTestFrame
                 }
             }
         });
-        loadSavePanel.add(saveBtn);
+        editorPanel.add(saveBtn);
 
-        editorPanel.add(loadSavePanel, BorderLayout.NORTH);
+        // --- object choosing/creation row ---
+        objectChooserBox = new JComboBox<>(GLObject.getObjectTypes());
+        objectChooserBox.setSize(new Dimension(editorPanelWidth / 2, height / 16));
+        editorPanel.add(objectChooserBox);
 
-        // --- object adding panel ---
-        JPanel objectAddingPanel = new JPanel();
+        addObjectBtn = new JButton("Add child");
+        addObjectBtn.setSize(new Dimension(editorPanelWidth / 6, height / 16));
+        editorPanel.add(addObjectBtn);
 
-        JComboBox<Class> objectChooserBox = new JComboBox<>(GLObject.getObjectTypes());
-        objectAddingPanel.add(objectChooserBox);
+        // --- object selection row ---
+        objectList = new DefaultListModel<>();
+        objectList.addElement(canvas.getViewer().getRoot());
+        JList<GLObject> objectJList = new JList<>(objectList);
+        editorPanel.add(objectJList);
 
-        JButton addObjBtn = new JButton("Add object");
-        objectAddingPanel.add(addObjBtn);
+        JLabel emptyLabel = new JLabel();
+        editorPanel.add(emptyLabel);
 
-        editorPanel.add(objectAddingPanel);
+        JLabel currentObjectLbl = new JLabel();
+        currentObjectLbl.setText(String.format("<html>Selected: <br />%s</html>", currentObject));
+        editorPanel.add(currentObjectLbl);
 
         add(editorPanel, BorderLayout.WEST);
         pack();
