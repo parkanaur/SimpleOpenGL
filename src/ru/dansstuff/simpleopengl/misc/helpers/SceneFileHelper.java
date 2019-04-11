@@ -29,7 +29,9 @@ public final class SceneFileHelper {
         return gson.toJson(root, GLObject.class);
     }
 
-    public static void writeScene(GLObject root, String filename) throws IOException {
-        new FileWriter(filename).write(getSceneJson(root));
+    public static void writeScene(GLObject root, File file) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath()));
+        bw.write(getSceneJson(root));
+        bw.close();
     }
 }
