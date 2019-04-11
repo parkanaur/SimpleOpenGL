@@ -32,9 +32,9 @@ Java-Bean: True
 Name: ru/dansstuff/simpleopengl/objects/Cylinder.class
 Java-Bean: True
 
-Name: ru/dansstuff/simpleopengl/tree/GLNode.class
+Name: ru/dansstuff/simpleopengl/viewer/OpenGLViewer.class
 Java-Bean: True
 
-Name: ru/dansstuff/simpleopengl/viewer/OpenGLViewer.class
+Name: ru/dansstuff/simpleopengl/viewer/GLViewerCanvas.class
 Java-Bean: True
 

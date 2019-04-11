@@ -145,8 +145,6 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
         if (root != null) {
             gl.glPushMatrix();
-            gl.glRotatef(-90, 1, 0, 0);
-
             root.drawTree(gl);
             gl.glPopMatrix();
         }
@@ -198,7 +196,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
             textRenderer.draw(String.format("rotn x %.02f y %.02f z %.02f ", rotn.getX(), rotn.getY(), rotn.getZ()), 10, drawable.getSurfaceHeight() - 15);
             textRenderer.draw(String.format("objects count: %d", root.getObjectsCount()), 10, drawable.getSurfaceHeight() - 30);
             textRenderer.draw(String.format("mouse pos: %d %d", curMousePos.x, curMousePos.y), 10, drawable.getSurfaceHeight() - 45);
-            //textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, canvas.getHeight() - 30);
+            textRenderer.draw("controls: WASD/arrows + shift/ctrl for Y axis", 10, drawable.getSurfaceHeight() - 60);
             textRenderer.endRendering();
         }
     }

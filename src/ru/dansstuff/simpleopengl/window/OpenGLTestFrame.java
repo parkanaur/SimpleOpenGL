@@ -53,8 +53,5 @@ public class OpenGLTestFrame
         setBackground(Color.BLACK);
 
         addWindowListener(new OpenGLTestFrameWindowListener());
-        addMouseListener(new MouseAdapter() {
-
-        });
     }
 }
