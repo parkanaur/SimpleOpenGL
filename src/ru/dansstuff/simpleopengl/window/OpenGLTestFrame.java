@@ -4,6 +4,7 @@ import com.jogamp.opengl.util.Animator;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLTestFramePopupMenu;
@@ -44,7 +45,6 @@ public class OpenGLTestFrame
         setResizable(true);
 
         add(canvas);
-
         initWindow();
 
         Animator animator = new Animator(canvas);
@@ -66,8 +66,11 @@ public class OpenGLTestFrame
     }
 
     private void initEditorArea() {
-        JPanel editorPanel = new JPanel();
+        JPanel editorPanel = new JPanel(new BorderLayout());
         editorPanel.setSize((int)(width * editorPanelWidth), height);
+
+        // --- load/save panel ---
+        JPanel loadSavePanel = new JPanel();
 
         JButton loadBtn = new JButton("Load scene...");
         loadBtn.addActionListener(e -> {
@@ -82,7 +85,7 @@ public class OpenGLTestFrame
                 }
             }
         });
-        editorPanel.add(loadBtn);
+        loadSavePanel.add(loadBtn);
 
         JButton saveBtn = new JButton("Save scene...");
         saveBtn.addActionListener(e -> {
@@ -97,8 +100,22 @@ public class OpenGLTestFrame
                 }
             }
         });
-        editorPanel.add(saveBtn);
+        loadSavePanel.add(saveBtn);
+
+        editorPanel.add(loadSavePanel, BorderLayout.NORTH);
+
+        // --- object adding panel ---
+        JPanel objectAddingPanel = new JPanel();
+
+        JComboBox<Class> objectChooserBox = new JComboBox<>(GLObject.getObjectTypes());
+        objectAddingPanel.add(objectChooserBox);
+
+        JButton addObjBtn = new JButton("Add object");
+        objectAddingPanel.add(addObjBtn);
+
+        editorPanel.add(objectAddingPanel);
 
         add(editorPanel, BorderLayout.WEST);
+        pack();
     }
 }
