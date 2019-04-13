@@ -22,7 +22,7 @@ public class OpenGLTestFrame
     private int height;
     @Getter @Setter
     private GLViewerCanvas canvas;
-
+    @Getter @Setter
     private GLObject currentObject;
 
     public void setWidth(int width) {
