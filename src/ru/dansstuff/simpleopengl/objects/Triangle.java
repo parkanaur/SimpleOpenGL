@@ -22,7 +22,6 @@ public class Triangle extends GLObject {
         this.p2 = p2;
         this.p3 = p3;
         this.color = OpenGLColor.WHITE;
-        //this.type = "Triangle";
     }
 
     public void draw(GL2 gl) {

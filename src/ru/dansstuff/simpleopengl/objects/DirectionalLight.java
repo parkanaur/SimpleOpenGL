@@ -33,7 +33,6 @@ public class DirectionalLight extends GLObject {
         this.color = color;
         this.pos = pos;
         this.index = index;
-        //this.type = "DirectionalLight";
     }
 
     @Override

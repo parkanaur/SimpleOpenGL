@@ -25,7 +25,6 @@ public class Sphere extends GLObject {
         this.center = center;
         this.radius = radius;
         this.color = color;
-        //this.type = "Sphere";
     }
 
     @Override

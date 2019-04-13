@@ -21,7 +21,6 @@ public class Line extends GLObject {
         this.p1 = p1;
         this.p2 = p2;
         this.color = color;
-        //this.type = "Line";
     }
 
     public void draw(GL2 gl) {

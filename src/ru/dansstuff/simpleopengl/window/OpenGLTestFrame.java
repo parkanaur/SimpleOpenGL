@@ -3,6 +3,7 @@ package ru.dansstuff.simpleopengl.window;
 import com.jogamp.opengl.util.Animator;
 import lombok.Getter;
 import lombok.Setter;
+import ru.dansstuff.simpleopengl.misc.helpers.ObjectCreationFrameFactory;
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
@@ -77,7 +78,14 @@ public class OpenGLTestFrame
     private void initMenuBar() {
         JMenuBar mainBar = new JMenuBar();
 
-        // --- load/save menu ---
+        mainBar.add(getLoadSaveMenu());
+        mainBar.add(getSceneHandlingMenu());
+        mainBar.add(getObjectHandlingMenu());
+
+        setJMenuBar(mainBar);
+    }
+
+    private JMenu getLoadSaveMenu() {
         JMenu loadSaveMenu = new JMenu("File");
 
         JMenuItem loadMenuItem = new JMenuItem("Open scene...");
@@ -109,11 +117,20 @@ public class OpenGLTestFrame
             }
         });
 
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(e -> {
+            System.exit(0);
+        });
+
         loadSaveMenu.add(loadMenuItem);
         loadSaveMenu.add(saveMenuItem);
-        mainBar.add(loadSaveMenu);
+        loadSaveMenu.addSeparator();
+        loadSaveMenu.add(exitMenuItem);
 
-        // --- scene handling menu ---
+        return loadSaveMenu;
+    }
+
+    private JMenu getSceneHandlingMenu() {
         JMenu sceneHandlingMenu = new JMenu("Scene");
 
         JMenuItem enableSceneItem = new JMenuItem("Enable/disable rendering");
@@ -128,8 +145,33 @@ public class OpenGLTestFrame
 
         sceneHandlingMenu.add(enableSceneItem);
         sceneHandlingMenu.add(enableAxisItem);
-        mainBar.add(sceneHandlingMenu);
 
-        setJMenuBar(mainBar);
+        return sceneHandlingMenu;
+    }
+
+    private JMenu getObjectHandlingMenu() {
+        JMenu objectHandlingMenu = new JMenu("Objects");
+
+        JMenu objectAddingMenu = new JMenu("Add child object");
+        for (Class clazz : GLObject.getObjectTypes()) {
+            JMenuItem typeItem = new JMenuItem(clazz.getSimpleName());
+            typeItem.addActionListener(e -> {
+                JFrame typeCreationFrame = ObjectCreationFrameFactory.getFrame(clazz, this);
+            });
+
+            objectAddingMenu.add(typeItem);
+        }
+
+        JMenuItem currentObjectSelectionItem = new JMenuItem("Select current object");
+
+        JMenuItem objectEditingItem = new JMenuItem("Edit current object");
+
+
+        objectHandlingMenu.add(objectAddingMenu);
+        objectHandlingMenu.addSeparator();
+        objectHandlingMenu.add(currentObjectSelectionItem);
+        objectHandlingMenu.add(objectEditingItem);
+
+        return objectHandlingMenu;
     }
 }

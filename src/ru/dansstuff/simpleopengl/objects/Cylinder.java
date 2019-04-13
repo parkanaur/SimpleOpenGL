@@ -28,7 +28,6 @@ public class Cylinder extends GLObject {
         this.radius = radius;
         this.color = color;
         this.height = height;
-        //this.type = "Cylinder";
     }
 
     @Override

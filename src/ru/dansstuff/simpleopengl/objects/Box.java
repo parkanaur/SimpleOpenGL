@@ -24,15 +24,12 @@ public class Box extends GLObject {
         this.center = center;
         this.length = length;
         this.color = color;
-        //this.type = "Box";
     }
 
     public void draw (GL2 gl) {
         GLUT glut = new GLUT();
-        //gl.glPushMatrix();
         gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glColor3f(color.getR(), color.getG(), color.getB());
         glut.glutSolidCube(length);
-        //gl.glPopMatrix();
     }
 }
