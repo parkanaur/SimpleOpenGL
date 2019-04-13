@@ -47,7 +47,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     private boolean drawAxis = true;
 
     @Getter @Setter
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     @Getter @Setter
     private boolean needTextureResolution = false;

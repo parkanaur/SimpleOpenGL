@@ -1,25 +1,22 @@
 package ru.dansstuff.simpleopengl;
 
-import ru.dansstuff.simpleopengl.math.Vec3;
-import ru.dansstuff.simpleopengl.math.Vec4;
-import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
-import ru.dansstuff.simpleopengl.objects.*;
 import ru.dansstuff.simpleopengl.window.OpenGLTestFrame;
-
-import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        OpenGLTestFrame frame = new OpenGLTestFrame(1200, 900);
+        int width = 800;
+        int height = 600;
 
-        frame.getCanvas().getViewer().setDrawAxis(true);
-        frame.getCanvas().getViewer().setEnabled(true);
+        if (args.length == 2) {
+            try {
+                width = Integer.parseInt(args[0]);
+                height = Integer.parseInt(args[1]);
+            }
+            catch (Exception ex) {
+                System.out.println("Invalid width or height parameter");
+                return;
+            }
+        }
+        OpenGLTestFrame frame = new OpenGLTestFrame(width, height);
     }
 }

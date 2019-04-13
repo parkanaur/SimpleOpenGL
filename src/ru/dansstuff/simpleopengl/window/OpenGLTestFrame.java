@@ -4,15 +4,11 @@ import com.jogamp.opengl.util.Animator;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
-import ru.dansstuff.simpleopengl.objects.EmptyObject;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
-import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
-import ru.dansstuff.simpleopengl.viewer.listeners.OpenGLTestFramePopupMenu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -27,8 +23,6 @@ public class OpenGLTestFrame
     private GLViewerCanvas canvas;
 
     private GLObject currentObject;
-
-    private final double editorPanelCoef = 0.2;
 
     public void setWidth(int width) {
         this.width = width;
@@ -69,12 +63,14 @@ public class OpenGLTestFrame
         setBackground(Color.BLACK);
 
         initMenuBar();
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
+
         setVisible(true);
     }
 
@@ -82,7 +78,6 @@ public class OpenGLTestFrame
         JMenuBar mainBar = new JMenuBar();
 
         // --- load/save menu ---
-
         JMenu loadSaveMenu = new JMenu("File");
 
         JMenuItem loadMenuItem = new JMenuItem("Open scene...");
@@ -117,6 +112,23 @@ public class OpenGLTestFrame
         loadSaveMenu.add(loadMenuItem);
         loadSaveMenu.add(saveMenuItem);
         mainBar.add(loadSaveMenu);
+
+        // --- scene handling menu ---
+        JMenu sceneHandlingMenu = new JMenu("Scene");
+
+        JMenuItem enableSceneItem = new JMenuItem("Enable/disable rendering");
+        enableSceneItem.addActionListener(e -> {
+            canvas.getViewer().setEnabled(!canvas.getViewer().isEnabled());
+        });
+
+        JMenuItem enableAxisItem = new JMenuItem("Enable/disable axis");
+        enableAxisItem.addActionListener(e -> {
+            canvas.getViewer().setDrawAxis(!canvas.getViewer().isDrawAxis());
+        });
+
+        sceneHandlingMenu.add(enableSceneItem);
+        sceneHandlingMenu.add(enableAxisItem);
+        mainBar.add(sceneHandlingMenu);
 
         setJMenuBar(mainBar);
     }
