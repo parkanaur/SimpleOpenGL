@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.*;
+import ru.dansstuff.simpleopengl.objects.windows.DirectionalLightFrame;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -33,6 +34,7 @@ public class DirectionalLight extends GLObject {
         this.color = color;
         this.pos = pos;
         this.index = index;
+        frameClass = DirectionalLightFrame.class;
     }
 
     @Override

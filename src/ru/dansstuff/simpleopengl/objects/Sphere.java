@@ -6,6 +6,7 @@ import com.jogamp.opengl.glu.GLUquadric;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.windows.SphereFrame;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -25,6 +26,7 @@ public class Sphere extends GLObject {
         this.center = center;
         this.radius = radius;
         this.color = color;
+        frameClass = SphereFrame.class;
     }
 
     @Override

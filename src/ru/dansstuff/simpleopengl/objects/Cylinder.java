@@ -6,6 +6,7 @@ import com.jogamp.opengl.glu.GLUquadric;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.windows.CylinderFrame;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -28,6 +29,7 @@ public class Cylinder extends GLObject {
         this.radius = radius;
         this.color = color;
         this.height = height;
+        frameClass = CylinderFrame.class;
     }
 
     @Override

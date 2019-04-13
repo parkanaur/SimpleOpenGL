@@ -1,7 +1,6 @@
 package ru.dansstuff.simpleopengl.misc.helpers;
 
 import ru.dansstuff.simpleopengl.objects.*;
-import ru.dansstuff.simpleopengl.objects.Box;
 import ru.dansstuff.simpleopengl.objects.windows.*;
 import ru.dansstuff.simpleopengl.window.OpenGLTestFrame;
 
@@ -15,19 +14,19 @@ public class ObjectCreationFrameFactory {
 
     static {
         frameMap = new HashMap<>();
-        frameMap.put(Box.class, BoxFrame.class);
-        frameMap.put(Cylinder.class, CylinderFrame.class);
-        frameMap.put(DirectionalLight.class, DirectionalLight.class);
-        frameMap.put(EmptyObject.class, EmptyObjectFrame.class);
-        frameMap.put(Line.class, LineFrame.class);
-        frameMap.put(Sphere.class, SphereFrame.class);
-        frameMap.put(Triangle.class, TriangleFrame.class);
+        try {
+            for (Class clazz : GLObject.getObjectTypes()) {
+                frameMap.put(clazz, ((GLObject)clazz.getConstructor().newInstance()).getFrameClass());
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
-
     public static JFrame getFrame(Class clazz, OpenGLTestFrame parent) {
         TypeBaseFrame frame;
         try {
-            frame = (TypeBaseFrame)(frameMap.get(clazz).getConstructor().newInstance());
+            frame = (TypeBaseFrame)frameMap.get(clazz).getConstructor().newInstance();
         }
         catch (Exception ex) {
             frame = new TypeBaseFrame();

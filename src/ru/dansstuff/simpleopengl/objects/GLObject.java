@@ -9,10 +9,7 @@ import lombok.experimental.Accessors;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class GLObject implements Serializable {
     public abstract void draw(GL2 gl);
@@ -27,6 +24,9 @@ public abstract class GLObject implements Serializable {
     protected String textureFile;
     @Getter @Setter
     protected Texture texture;
+
+    @Getter
+    protected static Class frameClass;
 
     public GLObject getChildren(int index) {
         return children.get(index);
@@ -103,8 +103,8 @@ public abstract class GLObject implements Serializable {
         children.clear();
     }
 
-    public static Class[] getObjectTypes() {
-        return new Class[] {Box.class, Cylinder.class, DirectionalLight.class,
-                Line.class, Sphere.class, Triangle.class, EmptyObject.class};
+    public static HashSet<Class> getObjectTypes() {
+        return new LinkedHashSet<>(Arrays.asList(Box.class, Cylinder.class, DirectionalLight.class,
+                Line.class, Sphere.class, Triangle.class, EmptyObject.class));
     }
 }

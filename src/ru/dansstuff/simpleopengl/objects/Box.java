@@ -5,6 +5,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.windows.BoxFrame;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -24,6 +25,7 @@ public class Box extends GLObject {
         this.center = center;
         this.length = length;
         this.color = color;
+        frameClass = BoxFrame.class;
     }
 
     public void draw (GL2 gl) {
