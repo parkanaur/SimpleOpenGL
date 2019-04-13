@@ -41,8 +41,11 @@ public class OpenGLTestFrame
     }
 
     public OpenGLTestFrame(int width, int height) {
-        canvas = new GLViewerCanvas();
-        canvas.getViewer().setRoot(new EmptyObject());
+        this(width, height, new GLViewerCanvas());
+    }
+
+    public OpenGLTestFrame(int width, int height, GLViewerCanvas canvas) {
+        this.canvas = canvas;
         currentObject = canvas.getViewer().getRoot();
         setWidth(width);
         setHeight(height);
@@ -58,57 +61,47 @@ public class OpenGLTestFrame
 
     private void initWindow() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width - width) / 2, (screenSize.height - height) / 2, (int)(width * (1 + editorPanelCoef)), height);
+        setBounds((screenSize.width - width) / 2, (screenSize.height - height) / 2, width, height);
 
         setTitle(this.getClass().getSimpleName());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setVisible(true);
         setBackground(Color.BLACK);
 
-        addWindowListener(new OpenGLTestFrameWindowListener());
-
-        initEditorArea();
+        initMenuBar();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        setVisible(true);
     }
 
-    private JButton loadBtn;
-    private JButton saveBtn;
+    private void initMenuBar() {
+        JMenuBar mainBar = new JMenuBar();
 
-    private JComboBox<Class> objectChooserBox;
-    private JButton addObjectBtn;
+        // --- load/save menu ---
 
-    private JList<GLObject> objectJList;
-    private DefaultListModel<GLObject> objectList;
+        JMenu loadSaveMenu = new JMenu("File");
 
-    private void initEditorArea() {
-        int editorPanelWidth = (int)(width * editorPanelCoef);
-        JPanel editorPanel = new JPanel();
-        editorPanel.setPreferredSize(new Dimension(editorPanelWidth, height));
-       // editorPanel.setLayout(new BoxLayout(editorPanel, BoxLayout.Y_AXIS));
-
-        // --- load/save row ---
-
-        loadBtn = new JButton("Load scene...");
-        Dimension lbSize = loadBtn.getPreferredSize();
-        loadBtn.addActionListener(e -> {
+        JMenuItem loadMenuItem = new JMenuItem("Open scene...");
+        loadMenuItem.addActionListener(e -> {
             final JFileChooser fc = new JFileChooser();
 
             if (fc.showOpenDialog(OpenGLTestFrame.this) == JFileChooser.APPROVE_OPTION) {
                 try {
                     canvas.getViewer().setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
-                    objectList.clear();
-                    for (GLObject obj : canvas.getViewer().getRoot().getTreeAsList()) {
-                        objectList.addElement(obj);
-                    }
+                    canvas.getViewer().setNeedTextureResolution(true);
                 }
                 catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
             }
         });
-        editorPanel.add(loadBtn);
 
-        saveBtn = new JButton("Save scene...");
-        saveBtn.addActionListener(e -> {
+        JMenuItem saveMenuItem = new JMenuItem("Save scene...");
+        saveMenuItem.addActionListener(e -> {
             final JFileChooser fc = new JFileChooser();
 
             if(fc.showSaveDialog(OpenGLTestFrame.this) == JFileChooser.APPROVE_OPTION) {
@@ -120,31 +113,11 @@ public class OpenGLTestFrame
                 }
             }
         });
-        editorPanel.add(saveBtn);
 
-        // --- object choosing/creation row ---
-        objectChooserBox = new JComboBox<>(GLObject.getObjectTypes());
-        objectChooserBox.setSize(new Dimension(editorPanelWidth / 2, height / 16));
-        editorPanel.add(objectChooserBox);
+        loadSaveMenu.add(loadMenuItem);
+        loadSaveMenu.add(saveMenuItem);
+        mainBar.add(loadSaveMenu);
 
-        addObjectBtn = new JButton("Add child");
-        addObjectBtn.setSize(new Dimension(editorPanelWidth / 6, height / 16));
-        editorPanel.add(addObjectBtn);
-
-        // --- object selection row ---
-        objectList = new DefaultListModel<>();
-        objectList.addElement(canvas.getViewer().getRoot());
-        JList<GLObject> objectJList = new JList<>(objectList);
-        editorPanel.add(objectJList);
-
-        JLabel emptyLabel = new JLabel();
-        editorPanel.add(emptyLabel);
-
-        JLabel currentObjectLbl = new JLabel();
-        currentObjectLbl.setText(String.format("<html>Selected: <br />%s</html>", currentObject));
-        editorPanel.add(currentObjectLbl);
-
-        add(editorPanel, BorderLayout.WEST);
-        pack();
+        setJMenuBar(mainBar);
     }
 }

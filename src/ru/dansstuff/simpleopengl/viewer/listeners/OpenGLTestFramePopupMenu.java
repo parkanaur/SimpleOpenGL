@@ -20,6 +20,7 @@ public class OpenGLTestFramePopupMenu extends JPopupMenu {
                 if (fc.showOpenDialog(OpenGLTestFramePopupMenu.this) == JFileChooser.APPROVE_OPTION) {
                     try {
                         viewer.setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
+                        viewer.setNeedTextureResolution(true);
                     }
                     catch (FileNotFoundException ex) {
                         ex.printStackTrace();
@@ -48,7 +49,7 @@ public class OpenGLTestFramePopupMenu extends JPopupMenu {
         add(showAxisItem);
 
         JMenuItem resolveTexturesItem = new JMenuItem("Resolve textures");
-        showAxisItem.addActionListener(new ActionListener() {
+        resolveTexturesItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 viewer.setNeedTextureResolution(true);

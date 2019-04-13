@@ -50,7 +50,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     private boolean enabled = false;
 
     @Getter @Setter
-    private boolean needTextureResolution = true;
+    private boolean needTextureResolution = false;
 
     private List<GLObject> axis;
     private Queue<OpenGLOperation> pendingOperations;
@@ -58,7 +58,8 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     @Getter @Setter
     private GLObject root;
 
-    public OpenGLViewer() {
+    public OpenGLViewer(GLObject root) {
+        this.root = root;
         glu = new GLU();
         textRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
         labelRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
@@ -70,6 +71,10 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
         axis = getAxis();
         pendingOperations = new ConcurrentLinkedQueue<>();
+    }
+
+    public OpenGLViewer() {
+        this(new EmptyObject());
     }
 
     @Override
@@ -114,7 +119,8 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClear (gl.GL_COLOR_BUFFER_BIT |  gl.GL_DEPTH_BUFFER_BIT );
 
-        if (needTextureResolution) {
+        if (needTextureResolution && root != null) {
+            System.out.println("need");
             try {
                 root.resolveTexturesForTree(new HashMap<>());
             }
