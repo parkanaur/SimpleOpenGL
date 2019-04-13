@@ -120,7 +120,6 @@ public class OpenGLViewer implements GLEventListener, Serializable {
         gl.glClear (gl.GL_COLOR_BUFFER_BIT |  gl.GL_DEPTH_BUFFER_BIT );
 
         if (needTextureResolution && root != null) {
-            System.out.println("need");
             try {
                 root.resolveTexturesForTree(new HashMap<>());
             }

@@ -38,7 +38,6 @@ public abstract class GLObject implements Serializable {
 
     public void resolveTexturesForTree(Map<String, Texture> textureMap) throws IOException {
         resolveTexture(textureMap);
-        System.out.println("Resolving texture for " + this.getTextureFile());
         for (GLObject child : children) {
             child.resolveTexturesForTree(textureMap);
         }
