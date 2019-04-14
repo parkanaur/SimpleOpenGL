@@ -103,8 +103,12 @@ public abstract class GLObject implements Serializable {
         children.clear();
     }
 
-    public static HashSet<Class> getObjectTypes() {
-        return new LinkedHashSet<>(Arrays.asList(Box.class, Cylinder.class, DirectionalLight.class,
+    public static Set<Class> getObjectTypes() {
+        Set<Class> types = new TreeSet<>(Comparator.comparing(Class::getSimpleName));
+
+        types.addAll(Arrays.asList(Box.class, Cylinder.class, DirectionalLight.class,
                 Line.class, Sphere.class, Triangle.class, EmptyObject.class));
+
+        return types;
     }
 }
