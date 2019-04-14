@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.windows.TriangleFrame;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -22,7 +23,7 @@ public class Triangle extends GLObject {
         this.p2 = p2;
         this.p3 = p3;
         this.color = OpenGLColor.WHITE;
-        //this.type = "Triangle";
+        frameClass = TriangleFrame.class;
     }
 
     public void draw(GL2 gl) {

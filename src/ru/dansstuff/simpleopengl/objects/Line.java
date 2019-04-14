@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.windows.LineFrame;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -21,7 +22,7 @@ public class Line extends GLObject {
         this.p1 = p1;
         this.p2 = p2;
         this.color = color;
-        //this.type = "Line";
+        frameClass = LineFrame.class;
     }
 
     public void draw(GL2 gl) {
