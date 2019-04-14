@@ -38,7 +38,6 @@ public class ObjectCreationFrameFactory {
         }
 
         frame.setParent(parent);
-        frame.setVisible(true);
         frame.setTitle(clazz.getSimpleName());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,6 +47,7 @@ public class ObjectCreationFrameFactory {
                 (screenSize.height - height) / 2,
                 width, height);
 
+        frame.setVisible(true);
         return frame;
     }
 }

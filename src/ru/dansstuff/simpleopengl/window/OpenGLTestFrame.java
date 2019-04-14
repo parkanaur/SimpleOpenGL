@@ -165,6 +165,7 @@ public class OpenGLTestFrame
         JMenuItem currentObjectSelectionItem = new JMenuItem("Select current object");
 
         JMenuItem objectEditingItem = new JMenuItem("Edit current object");
+        JMenuItem objectEditingItem = new JMenuItem("Edit object...");
 
 
         objectHandlingMenu.add(objectAddingMenu);
