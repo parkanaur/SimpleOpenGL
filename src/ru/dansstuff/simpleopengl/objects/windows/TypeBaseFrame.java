@@ -6,7 +6,13 @@ import ru.dansstuff.simpleopengl.window.OpenGLTestFrame;
 
 import javax.swing.*;
 
-public class TypeBaseFrame extends JFrame {
+public abstract class TypeBaseFrame extends JFrame {
     @Getter @Setter
-    private OpenGLTestFrame parent;
+    protected OpenGLTestFrame parent;
+
+    abstract protected void createObject();
+
+    protected int getNum(JTextField field) {
+        return Integer.parseInt(field.getText());
+    }
 }

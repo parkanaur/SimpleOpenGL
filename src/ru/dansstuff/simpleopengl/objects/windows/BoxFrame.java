@@ -70,15 +70,11 @@ public class BoxFrame extends TypeBaseFrame {
         add(okButton);
     }
 
-    private void createObject() {
+    protected void createObject() {
         Box box = new Box();
         box.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         box.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         box.setLength(getNum(lenField));
         getParent().getCurrentObject().addChild(box);
-    }
-
-    private int getNum(JTextField field) {
-        return Integer.parseInt(field.getText());
     }
 }

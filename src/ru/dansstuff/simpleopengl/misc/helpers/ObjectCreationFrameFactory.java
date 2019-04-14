@@ -29,7 +29,12 @@ public class ObjectCreationFrameFactory {
             frame = (TypeBaseFrame)frameMap.get(clazz).getConstructor().newInstance();
         }
         catch (Exception ex) {
-            frame = new TypeBaseFrame();
+            frame = new TypeBaseFrame() {
+                @Override
+                protected void createObject() {
+
+                }
+            };
         }
 
         frame.setParent(parent);
