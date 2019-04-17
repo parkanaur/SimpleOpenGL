@@ -3,10 +3,10 @@ package ru.dansstuff.simpleopengl;
 import ru.dansstuff.simpleopengl.window.OpenGLTestFrame;
 
 public class Main {
-    public static void main(String[] args) {
-        int width = 800;
-        int height = 600;
+    private static int width = 800;
+    private static int height = 600;
 
+    public static void main(String[] args) {
         if (args.length == 2) {
             try {
                 width = Integer.parseInt(args[0]);
