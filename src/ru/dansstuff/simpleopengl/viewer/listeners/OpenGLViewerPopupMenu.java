@@ -8,16 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-public class OpenGLTestFramePopupMenu extends JPopupMenu {
+public class OpenGLViewerPopupMenu extends JPopupMenu {
 
-    public OpenGLTestFramePopupMenu(OpenGLViewer viewer) {
+    public OpenGLViewerPopupMenu(OpenGLViewer viewer) {
         JMenuItem loadSceneItem = new JMenuItem("Load scene...");
         loadSceneItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFileChooser fc = new JFileChooser();
 
-                if (fc.showOpenDialog(OpenGLTestFramePopupMenu.this) == JFileChooser.APPROVE_OPTION) {
+                if (fc.showOpenDialog(OpenGLViewerPopupMenu.this) == JFileChooser.APPROVE_OPTION) {
                     try {
                         viewer.setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
                         viewer.setNeedTextureResolution(true);

@@ -4,7 +4,6 @@ import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 
 public class OpenGLViewerMouseListener extends MouseAdapter {
@@ -26,7 +25,7 @@ public class OpenGLViewerMouseListener extends MouseAdapter {
         viewer.getCurMousePos().y = -1;
 
         if (e.isPopupTrigger()) {
-            OpenGLTestFramePopupMenu menu = new OpenGLTestFramePopupMenu(viewer);
+            OpenGLViewerPopupMenu menu = new OpenGLViewerPopupMenu(viewer);
             menu.show(e.getComponent(), e.getX(), e.getY());
         }
     }
