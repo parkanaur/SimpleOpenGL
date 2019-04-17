@@ -2,18 +2,16 @@ package ru.dansstuff.simpleopengl.viewer.listeners;
 
 import ru.dansstuff.simpleopengl.viewer.OpenGLViewer;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class OpenGLViewerKeyListener implements KeyListener {
+public class OpenGLViewerKeyListener extends KeyAdapter {
     private OpenGLViewer viewer;
 
     public OpenGLViewerKeyListener(OpenGLViewer viewer) {
         this.viewer = viewer;
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) { }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -45,10 +43,5 @@ public class OpenGLViewerKeyListener implements KeyListener {
                 viewer.moveDown(0.1f);
                 break;
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }

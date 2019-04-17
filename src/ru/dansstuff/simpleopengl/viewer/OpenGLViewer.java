@@ -29,13 +29,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     private GLU glu;
 
     private TextRenderer textRenderer;
-    private TextRenderer labelRenderer;
 
-   // @Getter @Setter
-   // private Dimension size;
-
-    @Getter @Setter
-    private Vec3 cam;
+    //@Getter @Setter
+    //private Vec3 cam;
     @Getter @Setter
     private Point curMousePos;
     @Getter @Setter
@@ -60,11 +56,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
     public OpenGLViewer(GLObject root) {
         this.root = root;
-        glu = new GLU();
         textRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
-        labelRenderer = new TextRenderer(new Font("Monospaced", Font.PLAIN, 12));
 
-        cam = new Vec3(0, 0, -1);
+        //cam = new Vec3(0, 0, -1);
         curMousePos = new Point(-1, -1);
         rotn = new Vec3(15, 45, 0);
         center = new Vec3(0 ,0, -6);
@@ -141,11 +135,11 @@ public class OpenGLViewer implements GLEventListener, Serializable {
             for (GLObject ax : axis) {
                 ax.draw(gl);
             }
-            labelRenderer.begin3DRendering();
-            labelRenderer.draw3D("X", 3.2f, 0, 0, 0.05f);
-            labelRenderer.draw3D("Y", 0, 3.2f, 0, 0.05f);
-            labelRenderer.draw3D("Z", 0, 0, 3.2f, 0.05f);
-            labelRenderer.end3DRendering();
+            textRenderer.begin3DRendering();
+            textRenderer.draw3D("X", 3.2f, 0, 0, 0.05f);
+            textRenderer.draw3D("Y", 0, 3.2f, 0, 0.05f);
+            textRenderer.draw3D("Z", 0, 0, 3.2f, 0.05f);
+            textRenderer.end3DRendering();
         }
 
         if (root != null) {
@@ -230,7 +224,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     }
 
     public void moveForward(float dist) {
-        cam.setZ(cam.getZ() + dist);
+        //cam.setZ(cam.getZ() + dist);
         pendingOperations.add(new Translation(0, 0, dist));
     }
 
@@ -240,7 +234,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
     public void moveLeft(float dist) {
         // center.x += dist;
-        cam.setX(cam.getX() + dist);
+        //cam.setX(cam.getX() + dist);
         pendingOperations.add(new Translation(dist, 0, 0));
     }
 
@@ -251,7 +245,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
     public void moveUp(float dist) {
         // center.x += dist;
-        cam.setY(cam.getY() + dist);
+        //cam.setY(cam.getY() + dist);
         pendingOperations.add(new Translation(0, -dist, 0));
     }
 
@@ -263,7 +257,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     public void clear() {
         root.clear();
         root = null;
-        cam = new Vec3(0, 0, -1);
+        //cam = new Vec3(0, 0, -1);
         center = new Vec3(0 ,0, -6);
         rotn = new Vec3(15, 45, 0);
     }
