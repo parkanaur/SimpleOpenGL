@@ -42,4 +42,8 @@ public class DirectionalLight extends GLObject {
         gl.glLightfv(gl.GL_LIGHT0 + index, gl.GL_DIFFUSE, new float[] { color.getX(), color.getY(), color.getZ(), color.getW() }, index);
         gl.glLightfv(gl.GL_LIGHT0 + index, gl.GL_POSITION, new float[] { pos.getX(), pos.getY(), pos.getZ(), pos.getW() }, index);
     }
+
+    public void update() {
+
+    }
 }

@@ -43,4 +43,8 @@ public class Sphere extends GLObject {
         glu.gluSphere(q, radius, 100, 100);
         glu.gluDeleteQuadric(q);
     }
+
+    public void update() {
+
+    }
 }

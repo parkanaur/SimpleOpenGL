@@ -22,4 +22,8 @@ public class EmptyObject extends GLObject {
     public void draw(GL2 gl) {
 
     }
+
+    public void update() {
+
+    }
 }

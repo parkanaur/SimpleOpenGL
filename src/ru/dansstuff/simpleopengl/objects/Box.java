@@ -34,4 +34,8 @@ public class Box extends GLObject {
         gl.glColor3f(color.getR(), color.getG(), color.getB());
         glut.glutSolidCube(length);
     }
+
+    public void update() {
+
+    }
 }

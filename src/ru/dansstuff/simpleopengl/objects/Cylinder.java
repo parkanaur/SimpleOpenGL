@@ -42,4 +42,8 @@ public class Cylinder extends GLObject {
         glu.gluCylinder(q, radius, radius, height, 100, 100);
 
     }
+
+    public void update() {
+
+    }
 }

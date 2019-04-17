@@ -13,6 +13,7 @@ import java.util.*;
 
 public abstract class GLObject implements Serializable {
     public abstract void draw(GL2 gl);
+    public abstract void update();
 
     @Getter @Setter
     protected String id = "";
@@ -70,6 +71,7 @@ public abstract class GLObject implements Serializable {
 
     public void drawTree(GL2 gl) {
         this.draw(gl);
+        this.update();
         for (GLObject child : children) {
             child.drawTree(gl);
         }

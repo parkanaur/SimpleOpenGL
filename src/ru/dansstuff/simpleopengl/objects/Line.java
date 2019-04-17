@@ -32,4 +32,8 @@ public class Line extends GLObject {
         gl.glVertex3f(p2.getX(), p2.getY(), p2.getZ());
         gl.glEnd();
     }
+
+    public void update() {
+
+    }
 }

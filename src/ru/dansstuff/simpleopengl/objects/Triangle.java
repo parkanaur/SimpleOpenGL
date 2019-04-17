@@ -34,4 +34,8 @@ public class Triangle extends GLObject {
         gl.glVertex3f(p3.getX(), p3.getY(), p3.getZ());
         gl.glEnd();
     }
+
+    public void update() {
+
+    }
 }
