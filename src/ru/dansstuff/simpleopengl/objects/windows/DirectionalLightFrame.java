@@ -36,7 +36,7 @@ public class DirectionalLightFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public DirectionalLightFrame() {
-        setLayout(new GridLayout(3, 8));
+        setLayout(new FlowLayout());
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5); wField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5); aField.setColumns(5);

@@ -42,7 +42,7 @@ public class ObjectCreationFrameFactory {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = parent.getWidth() / 4;
-        int height = parent.getHeight() / 4;
+        int height = parent.getHeight() / 3;
         frame.setBounds((screenSize.width - width) / 2,
                 (screenSize.height - height) / 2,
                 width, height);

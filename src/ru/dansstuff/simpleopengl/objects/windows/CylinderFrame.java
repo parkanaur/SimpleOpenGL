@@ -37,18 +37,15 @@ public class CylinderFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public CylinderFrame() {
-        setLayout(new GridLayout(5, 4));
+        setLayout(new FlowLayout());
 
-        xField.setColumns(5);
-        yField.setColumns(5);
-        zField.setColumns(5);
+        xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
+        rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
+        radiusField.setColumns(5); heightField.setColumns(5);
 
-        add(xLabel);
-        add(xField);
-        add(yLabel);
-        add(yField);
-        add(zLabel);
-        add(zField);
+        add(xLabel); add(xField);
+        add(yLabel); add(yField);
+        add(zLabel); add(zField);
 
         add(radiusLabel);
         add(radiusField);
@@ -56,12 +53,9 @@ public class CylinderFrame extends TypeBaseFrame {
         add(heightLabel);
         add(heightField);
 
-        add(rLabel);
-        add(rField);
-        add(gLabel);
-        add(gField);
-        add(bLabel);
-        add(bField);
+        add(rLabel); add(rField);
+        add(gLabel); add(gField);
+        add(bLabel); add(bField);
 
         okButton.addActionListener(e -> {
             try {

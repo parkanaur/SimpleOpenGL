@@ -21,7 +21,7 @@ public class EmptyObjectFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public EmptyObjectFrame() {
-        setLayout(new GridLayout(4, 2));
+        setLayout(new FlowLayout());
 
         xField.setColumns(5);
         yField.setColumns(5);

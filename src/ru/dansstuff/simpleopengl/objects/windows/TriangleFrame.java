@@ -49,7 +49,7 @@ public class TriangleFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public TriangleFrame() {
-        setLayout(new GridLayout(5, 6));
+        setLayout(new FlowLayout());
 
         x1Field.setColumns(5); y1Field.setColumns(5); z1Field.setColumns(5);
         x2Field.setColumns(5); y2Field.setColumns(5); z2Field.setColumns(5);

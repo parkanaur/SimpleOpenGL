@@ -35,11 +35,11 @@ public class BoxFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public BoxFrame() {
-        setLayout(new GridLayout(4, 4));
+        setLayout(new FlowLayout());
 
-        xField.setColumns(5);
-        yField.setColumns(5);
-        zField.setColumns(5);
+        xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
+        rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
+        lenField.setColumns(5);
 
         add(xLabel);
         add(xField);

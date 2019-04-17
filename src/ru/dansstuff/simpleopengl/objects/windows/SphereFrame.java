@@ -34,11 +34,11 @@ public class SphereFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public SphereFrame() {
-        setLayout(new GridLayout(4, 4));
+        setLayout(new FlowLayout());
 
-        xField.setColumns(5);
-        yField.setColumns(5);
-        zField.setColumns(5);
+        xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
+        radiusField.setColumns(5);
+        rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
 
         add(xLabel);
         add(xField);
