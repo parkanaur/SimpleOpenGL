@@ -9,9 +9,30 @@ import java.util.Random;
 @Builder
 @EqualsAndHashCode
 public class OpenGLColor {
-    @Getter @Setter
+    @Getter
     private float r, g, b;
     private transient static Random random = new Random();
+
+    public void setB(float b) {
+        if (b < 0) {
+            throw new IllegalArgumentException("Invalid b: " + b);
+        }
+        this.b = b;
+    }
+
+    public void setG(float g) {
+        if (g < 0) {
+            throw new IllegalArgumentException("Invalid g: " + g);
+        }
+        this.g = g;
+    }
+
+    public void setR(float r) {
+        if (r < 0) {
+            throw new IllegalArgumentException("Invalid r: " + r);
+        }
+        this.r = r;
+    }
 
     public OpenGLColor() {
         this(1, 1, 1);
@@ -35,6 +56,10 @@ public class OpenGLColor {
     public static final OpenGLColor[] COLORS = {
             RED, GREEN, BLUE, WHITE
     };
+
+    public String toString() {
+        return "R " + r + " G " + g + " B " + b;
+    }
 
     public static OpenGLColor getRandomColor() {
         return COLORS[random.nextInt(COLORS.length)];

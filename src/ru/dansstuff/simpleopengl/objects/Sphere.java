@@ -13,10 +13,16 @@ import ru.dansstuff.simpleopengl.objects.windows.SphereFrame;
 public class Sphere extends GLObject {
     @Getter @Setter
     private Vec3 center;
-    @Getter @Setter
+    @Getter
     private float radius;
     @Getter @Setter
     private OpenGLColor color;
+
+    public void setRadius(float radius) {
+        if (radius < 0) {
+            throw new IllegalArgumentException("Invalid radius: " + radius);
+        }
+    }
 
     public Sphere() {
         this(new Vec3(0, 0, 0), 1, OpenGLColor.WHITE);

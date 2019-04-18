@@ -13,12 +13,26 @@ import ru.dansstuff.simpleopengl.objects.windows.CylinderFrame;
 public class Cylinder extends GLObject {
     @Getter @Setter
     private Vec3 center;
-    @Getter @Setter
+    @Getter
     private float radius;
-    @Getter @Setter
+    @Getter
     private float height;
     @Getter @Setter
     private OpenGLColor color;
+
+    public void setHeight(float height) {
+        if (height < 0) {
+            throw new IllegalArgumentException("Invalid height: " + height);
+        }
+        this.height = height;
+    }
+
+    public void setRadius(float radius) {
+        if (radius < 0) {
+            throw new IllegalArgumentException("Invalid height: " + radius);
+        }
+        this.radius = radius;
+    }
 
     public Cylinder() {
         this(new Vec3(0, 0, 0), 1, 1, OpenGLColor.WHITE);

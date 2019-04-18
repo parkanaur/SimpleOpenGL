@@ -16,14 +16,18 @@ public class DirectionalLight extends GLObject {
     @Getter @Setter
     private int index;
 
-    public DirectionalLight setColor(Vec4 color) {
+    public void setColor(Vec4 color) {
+        if (color.getX() < 0 || color.getY() < 0 || color.getZ() < 0) {
+            throw new IllegalArgumentException("Invalid color: " + color);
+        }
         this.color = color;
-        return this;
     }
 
-    public DirectionalLight setColor(OpenGLColor color) {
+    public void setColor(OpenGLColor color) {
+        if (color.getR() < 0 || color.getG() < 0 || color.getB() < 0) {
+            throw new IllegalArgumentException("Invalid color: " + color);
+        }
         this.color = new Vec4(color.getR(), color.getG(), color.getB(), this.color.getW());
-        return this;
     }
 
     public DirectionalLight() {

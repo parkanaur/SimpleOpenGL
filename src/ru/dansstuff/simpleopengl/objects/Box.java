@@ -12,10 +12,17 @@ import ru.dansstuff.simpleopengl.objects.windows.BoxFrame;
 public class Box extends GLObject {
     @Getter @Setter
     private Vec3 center;
-    @Getter @Setter
+    @Getter
     private float length;
     @Getter @Setter
     private OpenGLColor color;
+
+    public void setLength(float length) {
+        if (length < 0) {
+            throw new IllegalArgumentException("Invalid length: " + length);
+        }
+        this.length = length;
+    }
 
     public Box() {
         this(new Vec3(0, 0, 0), 1, OpenGLColor.WHITE);
