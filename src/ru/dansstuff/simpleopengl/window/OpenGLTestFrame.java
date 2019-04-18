@@ -9,6 +9,7 @@ import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -91,7 +92,7 @@ public class OpenGLTestFrame
         JMenuItem loadMenuItem = new JMenuItem("Open scene...");
         loadMenuItem.addActionListener(e -> {
             final JFileChooser fc = new JFileChooser();
-
+            fc.setFileFilter(new FileNameExtensionFilter("Model files (*.json)", "json"));
             if (fc.showOpenDialog(OpenGLTestFrame.this) == JFileChooser.APPROVE_OPTION) {
                 try {
                     canvas.getViewer().setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
@@ -100,13 +101,16 @@ public class OpenGLTestFrame
                 catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
+                catch (IllegalStateException ex) {
+                    JOptionPane.showMessageDialog(this, "Could not parse scene from file");
+                }
             }
         });
 
         JMenuItem saveMenuItem = new JMenuItem("Save scene...");
         saveMenuItem.addActionListener(e -> {
             final JFileChooser fc = new JFileChooser();
-
+            fc.setFileFilter(new FileNameExtensionFilter("Model files (*.json)", "json"));
             if(fc.showSaveDialog(OpenGLTestFrame.this) == JFileChooser.APPROVE_OPTION) {
                 try {
                     SceneFileHelper.writeScene(canvas.getViewer().getRoot(), fc.getSelectedFile());
@@ -143,8 +147,14 @@ public class OpenGLTestFrame
             canvas.getViewer().setDrawAxis(!canvas.getViewer().isDrawAxis());
         });
 
+        JMenuItem enableDebugTextItem = new JMenuItem("Enable/disable debug text");
+        enableDebugTextItem.addActionListener(e -> {
+            canvas.getViewer().setDrawDebugText(!canvas.getViewer().isDrawDebugText());
+        });
+
         sceneHandlingMenu.add(enableSceneItem);
         sceneHandlingMenu.add(enableAxisItem);
+        sceneHandlingMenu.add(enableDebugTextItem);
 
         return sceneHandlingMenu;
     }

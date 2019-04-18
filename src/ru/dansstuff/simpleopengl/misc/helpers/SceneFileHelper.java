@@ -22,7 +22,7 @@ public final class SceneFileHelper {
         gson = new GsonBuilder().registerTypeAdapterFactory(rFactory).create();
     }
 
-    public static GLObject readScene(File file) throws FileNotFoundException {
+    public static GLObject readScene(File file) throws FileNotFoundException, IllegalStateException {
         return gson.fromJson(new JsonReader(new FileReader(file)), GLObject.class);
     }
 

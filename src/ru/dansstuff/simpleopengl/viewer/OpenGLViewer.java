@@ -46,6 +46,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
     private boolean enabled = true;
 
     @Getter @Setter
+    private boolean drawDebugText = true;
+
+    @Getter @Setter
     private boolean needTextureResolution = false;
 
     private List<GLObject> axis;
@@ -156,7 +159,9 @@ public class OpenGLViewer implements GLEventListener, Serializable {
             pendingOperations.remove().doOperation(drawable);
         }
 
-        drawDebugText(drawable);
+        if (drawDebugText) {
+            drawDebugText(drawable);
+        }
     }
 
     public List<GLObject> getAxis() {
