@@ -23,16 +23,9 @@ public class EmptyObjectFrame extends TypeBaseFrame {
     public EmptyObjectFrame() {
         setLayout(new FlowLayout());
 
-        xField.setColumns(5);
-        yField.setColumns(5);
-        zField.setColumns(5);
+        xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
 
-        add(xLabel);
-        add(xField);
-        add(yLabel);
-        add(yField);
-        add(zLabel);
-        add(zField);
+        add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
 
         okButton.addActionListener(e -> {
             try {

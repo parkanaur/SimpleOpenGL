@@ -40,22 +40,9 @@ public class SphereFrame extends TypeBaseFrame {
         radiusField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
 
-        add(xLabel);
-        add(xField);
-        add(yLabel);
-        add(yField);
-        add(zLabel);
-        add(zField);
-
-        add(radiusLabel);
-        add(radiusField);
-
-        add(rLabel);
-        add(rField);
-        add(gLabel);
-        add(gField);
-        add(bLabel);
-        add(bField);
+        add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
+        add(radiusLabel); add(radiusField);
+        add(rLabel); add(rField); add(gLabel); add(gField); add(bLabel); add(bField);
 
         okButton.addActionListener(e -> {
             try {

@@ -41,22 +41,9 @@ public class BoxFrame extends TypeBaseFrame {
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
         lenField.setColumns(5);
 
-        add(xLabel);
-        add(xField);
-        add(yLabel);
-        add(yField);
-        add(zLabel);
-        add(zField);
-
-        add(lenLabel);
-        add(lenField);
-
-        add(rLabel);
-        add(rField);
-        add(gLabel);
-        add(gField);
-        add(bLabel);
-        add(bField);
+        add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
+        add(lenLabel); add(lenField);
+        add(rLabel); add(rField); add(gLabel); add(gField); add(bLabel); add(bField);
 
         okButton.addActionListener(e -> {
             try {
