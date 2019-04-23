@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class OpenGLViewerPopupMenu extends JPopupMenu {
 
@@ -23,7 +23,7 @@ public class OpenGLViewerPopupMenu extends JPopupMenu {
                         viewer.setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
                         viewer.setNeedTextureResolution(true);
                     }
-                    catch (FileNotFoundException | IllegalStateException ex) {
+                    catch (IOException | IllegalStateException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -42,5 +42,9 @@ public class OpenGLViewerPopupMenu extends JPopupMenu {
         JMenuItem resolveTexturesItem = new JMenuItem("Resolve textures");
         resolveTexturesItem.addActionListener(e -> viewer.setNeedTextureResolution(true));
         add(resolveTexturesItem);
+
+        JMenuItem clearSceneItem = new JMenuItem("Clear scene");
+        clearSceneItem.addActionListener(e -> viewer.clear());
+        add(clearSceneItem);
     }
 }

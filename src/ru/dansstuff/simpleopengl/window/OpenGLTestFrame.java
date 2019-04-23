@@ -11,7 +11,6 @@ import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class OpenGLTestFrame
@@ -98,7 +97,7 @@ public class OpenGLTestFrame
                     canvas.getViewer().setRoot(SceneFileHelper.readScene(fc.getSelectedFile()));
                     canvas.getViewer().setNeedTextureResolution(true);
                 }
-                catch (FileNotFoundException ex) {
+                catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 catch (IllegalStateException ex) {

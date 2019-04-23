@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
@@ -48,7 +49,7 @@ public abstract class GLObject implements Serializable {
         if (file.exists()) {
             return TextureIO.newTexture(file, true);
         }
-        return null;
+        throw new FileNotFoundException("Could not find file: " + file.getAbsolutePath());
     }
 
     public void resolveTexture(Map<String, Texture> textureMap) throws IOException {

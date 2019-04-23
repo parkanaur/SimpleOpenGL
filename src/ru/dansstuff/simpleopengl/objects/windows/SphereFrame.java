@@ -31,6 +31,9 @@ public class SphereFrame extends TypeBaseFrame {
     private JLabel bLabel = new JLabel("B");
     private JTextField bField = new JFormattedTextField(NumberFormat.getNumberInstance());
 
+    private JLabel tLabel = new JLabel("Texture file");
+    private JTextField tField = new JTextField();
+
     private JButton okButton = new JButton("OK");
 
     public SphereFrame() {
@@ -38,11 +41,13 @@ public class SphereFrame extends TypeBaseFrame {
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         radiusField.setColumns(5);
+        tField.setColumns(25);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
 
         add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
         add(radiusLabel); add(radiusField);
         add(rLabel); add(rField); add(gLabel); add(gField); add(bLabel); add(bField);
+        add(tLabel); add(tField);
 
         okButton.addActionListener(e -> {
             try {
@@ -51,6 +56,7 @@ public class SphereFrame extends TypeBaseFrame {
             }
             catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Invalid input");
+                ex.printStackTrace();
             }
         });
         add(okButton);
@@ -61,6 +67,7 @@ public class SphereFrame extends TypeBaseFrame {
         sphere.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         sphere.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         sphere.setRadius(getNum(radiusField));
+        sphere.setTextureFile(tField.getText().replace('\\', '/'));
         getParent().getCurrentObject().addChild(sphere);
     }
 }
