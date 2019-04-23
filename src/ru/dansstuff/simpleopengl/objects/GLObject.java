@@ -114,4 +114,9 @@ public abstract class GLObject implements Serializable {
 
         return types;
     }
+
+    @Override
+    public String toString() {
+        return id + ": " + getClass().getSimpleName();
+    }
 }

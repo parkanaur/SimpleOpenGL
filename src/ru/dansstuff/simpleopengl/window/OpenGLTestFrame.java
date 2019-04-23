@@ -7,10 +7,13 @@ import ru.dansstuff.simpleopengl.misc.helpers.ObjectCreationFrameFactory;
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
+import ru.dansstuff.simpleopengl.viewer.frames.CurrentObjectSelectionFrame;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class OpenGLTestFrame
@@ -176,7 +179,10 @@ public class OpenGLTestFrame
             objectAddingMenu.add(typeItem);
         }
 
-        JMenuItem currentObjectSelectionItem = new JMenuItem("Select current object");
+        JMenuItem currentObjectSelectionItem = new JMenuItem("Select current object...");
+        currentObjectSelectionItem.addActionListener(e -> {
+            JFrame frame = new CurrentObjectSelectionFrame(this);
+        });
 
         JMenuItem objectEditingItem = new JMenuItem("Edit object...");
 
