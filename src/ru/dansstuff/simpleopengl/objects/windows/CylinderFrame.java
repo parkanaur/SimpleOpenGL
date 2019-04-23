@@ -55,11 +55,15 @@ public class CylinderFrame extends TypeBaseFrame {
             bField.setText(String.valueOf(cylinder.getColor().getB()));
             radiusField.setText(String.valueOf(cylinder.getRadius()));
             heightField.setText(String.valueOf(cylinder.getHeight()));
+            idField.setText(String.valueOf(cylinder.getId()));
         }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
         radiusField.setColumns(5); heightField.setColumns(5);
+        idField.setColumns(5);
+
+        add(idLabel); add(idField);
 
         add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
         add(radiusLabel); add(radiusField);
@@ -80,6 +84,7 @@ public class CylinderFrame extends TypeBaseFrame {
 
     protected void createObject() {
         Cylinder cylinder = (Cylinder)object;
+        cylinder.setId(idField.getText());
         cylinder.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         cylinder.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         cylinder.setRadius(getNum(radiusField));

@@ -7,6 +7,9 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.windows.SphereFrame;
+import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
+import ru.dansstuff.simpleopengl.operations.OriginBasedRotation;
+import ru.dansstuff.simpleopengl.operations.Rotation;
 
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -22,6 +25,7 @@ public class Sphere extends GLObject {
         if (radius < 0) {
             throw new IllegalArgumentException("Invalid radius: " + radius);
         }
+        this.radius = radius;
     }
 
     public Sphere() {
@@ -38,7 +42,7 @@ public class Sphere extends GLObject {
     @Override
     public void draw(GL2 gl) {
         GLU glu = new GLU();
-
+        gl.glPushMatrix();
         gl.glTranslatef(center.getX(), center.getY(), center.getZ());
         gl.glColor3f(color.getR(), color.getG(), color.getB());
         GLUquadric q = glu.gluNewQuadric();
@@ -48,9 +52,33 @@ public class Sphere extends GLObject {
         }
         glu.gluSphere(q, radius, 100, 100);
         glu.gluDeleteQuadric(q);
+        gl.glPopMatrix();
     }
 
     public void update() {
+        for (OpenGLOperation transform : transforms) {
+            if (transform instanceof OriginBasedRotation) {
+                OriginBasedRotation r = (OriginBasedRotation)transform;
 
+                double s = Math.sin(r.getAngle());
+                double c = Math.cos(r.getAngle());
+
+                double px = center.getX();
+                double pz = center.getZ();
+
+                double xn = px * c - pz * s;
+                double zn = px * s + pz * c;
+
+                center.setX((float)xn);
+                center.setZ((float)zn);
+
+                try {
+                    Thread.sleep((long) (1000 / r.getSpeed()));
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
 }

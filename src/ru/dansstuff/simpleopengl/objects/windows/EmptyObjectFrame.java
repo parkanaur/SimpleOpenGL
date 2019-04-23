@@ -30,13 +30,18 @@ public class EmptyObjectFrame extends TypeBaseFrame {
         setLayout(new FlowLayout());
 
         if (!creatingObject) {
-            EmptyObject box = (EmptyObject)o;
-            xField.setText(String.valueOf(box.getCenter().getX()));
-            yField.setText(String.valueOf(box.getCenter().getY()));
-            zField.setText(String.valueOf(box.getCenter().getZ()));
+            EmptyObject emptyObject = (EmptyObject)o;
+            xField.setText(String.valueOf(emptyObject.getCenter().getX()));
+            yField.setText(String.valueOf(emptyObject.getCenter().getY()));
+            zField.setText(String.valueOf(emptyObject.getCenter().getZ()));
+            idField.setText(String.valueOf(emptyObject.getId()));
         }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
+
+        idField.setColumns(5);
+
+        add(idLabel); add(idField);
 
         add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
 
@@ -54,6 +59,7 @@ public class EmptyObjectFrame extends TypeBaseFrame {
 
     protected void createObject() {
         EmptyObject emptyObject = (EmptyObject)object;
+        emptyObject.setId(idField.getText());
         emptyObject.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         if (creatingObject) {
             getParent().getCurrentObject().addChild(emptyObject);

@@ -59,11 +59,16 @@ public class LineFrame extends TypeBaseFrame {
             rField.setText(String.valueOf(line.getColor().getR()));
             gField.setText(String.valueOf(line.getColor().getG()));
             bField.setText(String.valueOf(line.getColor().getB()));
+            idField.setText(String.valueOf(line.getId()));
         }
 
         x1Field.setColumns(5); y1Field.setColumns(5); z1Field.setColumns(5);
         x2Field.setColumns(5); y2Field.setColumns(5); z2Field.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
+
+        idField.setColumns(5);
+
+        add(idLabel); add(idField);
 
         add(x1Label); add(x1Field); add(y1Label); add(y1Field); add(z1Label); add(z1Field);
         add(x2Label); add(x2Field); add(y2Label); add(y2Field); add(z2Label); add(z2Field);
@@ -83,6 +88,7 @@ public class LineFrame extends TypeBaseFrame {
 
     protected void createObject() {
         Line line = (Line)object;
+        line.setId(idField.getText());
         line.setP1(new Vec3(getNum(x1Field), getNum(y1Field), getNum(z1Field)));
         line.setP2(new Vec3(getNum(x2Field), getNum(y2Field), getNum(z2Field)));
         line.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));

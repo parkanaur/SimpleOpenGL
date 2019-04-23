@@ -5,6 +5,7 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 import lombok.*;
 import lombok.experimental.Accessors;
+import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +27,8 @@ public abstract class GLObject implements Serializable {
     protected String textureFile;
     @Getter @Setter
     protected Texture texture;
+    @Getter @Setter
+    protected List<OpenGLOperation> transforms = new ArrayList<>();
 
     @Getter
     protected static Class frameClass;
@@ -70,6 +73,10 @@ public abstract class GLObject implements Serializable {
         children.add(child);
     }
 
+    public void addTransform(OpenGLOperation transform) {
+        transforms.add(transform);
+    }
+
     public void drawTree(GL2 gl) {
         this.draw(gl);
         this.update();
@@ -104,6 +111,7 @@ public abstract class GLObject implements Serializable {
             child.clear();
         }
         children.clear();
+        transforms.clear();
     }
 
     public static Set<Class> getObjectTypes() {

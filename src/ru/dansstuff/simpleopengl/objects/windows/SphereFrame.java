@@ -54,13 +54,16 @@ public class SphereFrame extends TypeBaseFrame {
             gField.setText(String.valueOf(sphere.getColor().getG()));
             bField.setText(String.valueOf(sphere.getColor().getB()));
             radiusField.setText(String.valueOf(sphere.getRadius()));
+            idField.setText(String.valueOf(sphere.getId()));
         }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         radiusField.setColumns(5);
         tField.setColumns(25);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
+        idField.setColumns(5);
 
+        add(idLabel); add(idField);
         add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
         add(radiusLabel); add(radiusField);
         add(rLabel); add(rField); add(gLabel); add(gField); add(bLabel); add(bField);
@@ -81,6 +84,7 @@ public class SphereFrame extends TypeBaseFrame {
 
     protected void createObject() {
         Sphere sphere = (Sphere)object;
+        sphere.setId(idField.getText());
         sphere.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         sphere.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         sphere.setRadius(getNum(radiusField));

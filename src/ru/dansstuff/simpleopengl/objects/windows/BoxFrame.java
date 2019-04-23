@@ -51,11 +51,15 @@ public class BoxFrame extends TypeBaseFrame {
             gField.setText(String.valueOf(box.getColor().getG()));
             bField.setText(String.valueOf(box.getColor().getB()));
             lenField.setText(String.valueOf(box.getLength()));
+            idField.setText(String.valueOf(box.getId()));
         }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
         lenField.setColumns(5);
+        idField.setColumns(5);
+
+        add(idLabel); add(idField);
 
         add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField);
         add(lenLabel); add(lenField);
@@ -75,6 +79,7 @@ public class BoxFrame extends TypeBaseFrame {
 
     protected void createObject() {
         Box box = (Box)object;
+        box.setId(idField.getText());
         box.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         box.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         box.setLength(getNum(lenField));

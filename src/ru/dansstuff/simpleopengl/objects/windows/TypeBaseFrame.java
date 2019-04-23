@@ -14,6 +14,9 @@ public abstract class TypeBaseFrame extends JFrame {
     @Getter @Setter
     protected boolean creatingObject;
 
+    protected JLabel idLabel = new JLabel("Id");
+    protected JTextField idField = new JTextField();
+
     @Getter @Setter
     protected GLObject object;
 

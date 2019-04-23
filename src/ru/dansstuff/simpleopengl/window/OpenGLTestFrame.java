@@ -6,6 +6,7 @@ import lombok.Setter;
 import ru.dansstuff.simpleopengl.misc.helpers.ObjectCreationFrameFactory;
 import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
 import ru.dansstuff.simpleopengl.objects.GLObject;
+import ru.dansstuff.simpleopengl.operations.OpenGLOperation;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
 import ru.dansstuff.simpleopengl.viewer.frames.CurrentObjectSelectionFrame;
 import ru.dansstuff.simpleopengl.viewer.frames.EditSelectedObjectAction;
@@ -188,6 +189,21 @@ public class OpenGLTestFrame
             objectAddingMenu.add(typeItem);
         }
 
+        JMenu transformAddingMenu = new JMenu("Add transform to object");
+        for (Class clazz : OpenGLOperation.getObjectTypes()) {
+            JMenuItem typeItem = new JMenuItem(clazz.getSimpleName());
+            typeItem.addActionListener(e -> {
+                try {
+                    OpenGLOperation op = (OpenGLOperation)clazz.getConstructor().newInstance();
+                    JFrame opCreationFrame = ObjectCreationFrameFactory.getOpFrame(clazz, this);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+            transformAddingMenu.add(typeItem);
+        }
+
         JMenuItem currentObjectSelectionItem = new JMenuItem("Select current object...");
         currentObjectSelectionItem.addActionListener(e -> {
             JFrame frame = new CurrentObjectSelectionFrame(this, new SelectCurrentObjectAction());
@@ -199,6 +215,7 @@ public class OpenGLTestFrame
         });
 
         objectHandlingMenu.add(objectAddingMenu);
+        objectHandlingMenu.add(transformAddingMenu);
         objectHandlingMenu.addSeparator();
         objectHandlingMenu.add(currentObjectSelectionItem);
         objectHandlingMenu.add(objectEditingItem);

@@ -4,15 +4,15 @@ import com.jogamp.opengl.GLAutoDrawable;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Rotation implements OpenGLOperation {
+public class Rotation extends OpenGLOperation {
     @Getter @Setter
-    public float x;
+    private float x;
     @Getter @Setter
-    public float y;
+    private float y;
     @Getter @Setter
-    public float z;
+    private float z;
     @Getter @Setter
-    public float angle;
+    private float angle;
 
     public Rotation() {
         

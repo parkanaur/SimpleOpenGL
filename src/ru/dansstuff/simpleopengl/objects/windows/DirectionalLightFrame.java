@@ -54,11 +54,14 @@ public class DirectionalLightFrame extends TypeBaseFrame {
             gField.setText(String.valueOf(light.getColor().getY()));
             bField.setText(String.valueOf(light.getColor().getZ()));
             aField.setText(String.valueOf(light.getColor().getW()));
+            idField.setText(String.valueOf(light.getId()));
         }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5); wField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5); aField.setColumns(5);
+        idField.setColumns(5);
 
+        add(idLabel); add(idField);
         add(xLabel); add(xField); add(yLabel); add(yField); add(zLabel); add(zField); add(wLabel); add(wField);
         add(rLabel); add(rField); add(gLabel); add(gField); add(bLabel); add(bField); add(aLabel); add(aField);
 
@@ -76,6 +79,7 @@ public class DirectionalLightFrame extends TypeBaseFrame {
 
     protected void createObject() {
         DirectionalLight light = (DirectionalLight)object;
+        light.setId(idField.getText());
         light.setColor(new Vec4(getNum(rField), getNum(gField), getNum(bField), getNum(aField)));
         light.setPos(new Vec4(getNum(xField), getNum(yField), getNum(zField), getNum(wField)));
         if (creatingObject) {
