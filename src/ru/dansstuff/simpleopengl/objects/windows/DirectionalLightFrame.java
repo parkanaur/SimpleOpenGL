@@ -2,6 +2,7 @@ package ru.dansstuff.simpleopengl.objects.windows;
 
 import ru.dansstuff.simpleopengl.math.Vec4;
 import ru.dansstuff.simpleopengl.objects.DirectionalLight;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +37,24 @@ public class DirectionalLightFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public DirectionalLightFrame() {
+        this(new DirectionalLight());
+    }
+
+    public DirectionalLightFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            DirectionalLight light = (DirectionalLight)o;
+            xField.setText(String.valueOf(light.getPos().getX()));
+            yField.setText(String.valueOf(light.getPos().getY()));
+            zField.setText(String.valueOf(light.getPos().getZ()));
+            wField.setText(String.valueOf(light.getPos().getW()));
+            rField.setText(String.valueOf(light.getColor().getX()));
+            gField.setText(String.valueOf(light.getColor().getY()));
+            bField.setText(String.valueOf(light.getColor().getZ()));
+            aField.setText(String.valueOf(light.getColor().getW()));
+        }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5); wField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5); aField.setColumns(5);
@@ -57,9 +75,11 @@ public class DirectionalLightFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        DirectionalLight light = new DirectionalLight();
+        DirectionalLight light = (DirectionalLight)object;
         light.setColor(new Vec4(getNum(rField), getNum(gField), getNum(bField), getNum(aField)));
         light.setPos(new Vec4(getNum(xField), getNum(yField), getNum(zField), getNum(wField)));
-        getParent().getCurrentObject().addChild(light);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(light);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package ru.dansstuff.simpleopengl.objects.windows;
 
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.objects.Triangle;
 import ru.dansstuff.simpleopengl.objects.OpenGLColor;
 
@@ -49,7 +50,28 @@ public class TriangleFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public TriangleFrame() {
+        this(new Triangle());
+    }
+
+    public TriangleFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            Triangle triangle = (Triangle)o;
+            x1Field.setText(String.valueOf(triangle.getP1().getX()));
+            y1Field.setText(String.valueOf(triangle.getP1().getY()));
+            z1Field.setText(String.valueOf(triangle.getP1().getZ()));
+            x2Field.setText(String.valueOf(triangle.getP2().getX()));
+            y2Field.setText(String.valueOf(triangle.getP2().getY()));
+            z2Field.setText(String.valueOf(triangle.getP2().getZ()));
+            x3Field.setText(String.valueOf(triangle.getP3().getX()));
+            y3Field.setText(String.valueOf(triangle.getP3().getY()));
+            z3Field.setText(String.valueOf(triangle.getP3().getZ()));
+            rField.setText(String.valueOf(triangle.getColor().getR()));
+            gField.setText(String.valueOf(triangle.getColor().getG()));
+            bField.setText(String.valueOf(triangle.getColor().getB()));
+        }
 
         x1Field.setColumns(5); y1Field.setColumns(5); z1Field.setColumns(5);
         x2Field.setColumns(5); y2Field.setColumns(5); z2Field.setColumns(5);
@@ -74,11 +96,13 @@ public class TriangleFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        Triangle triangle = new Triangle();
+        Triangle triangle = (Triangle)object;
         triangle.setP1(new Vec3(getNum(x1Field), getNum(y1Field), getNum(z1Field)));
         triangle.setP2(new Vec3(getNum(x2Field), getNum(y2Field), getNum(z2Field)));
         triangle.setP3(new Vec3(getNum(x3Field), getNum(y3Field), getNum(z3Field)));
         triangle.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
-        getParent().getCurrentObject().addChild(triangle);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(triangle);
+        }
     }
 }

@@ -2,6 +2,7 @@ package ru.dansstuff.simpleopengl.objects.windows;
 
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.Cylinder;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.objects.OpenGLColor;
 
 import javax.swing.*;
@@ -37,7 +38,24 @@ public class CylinderFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public CylinderFrame() {
+        this(new Cylinder());
+    }
+
+    public CylinderFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            Cylinder cylinder = (Cylinder)o;
+            xField.setText(String.valueOf(cylinder.getCenter().getX()));
+            yField.setText(String.valueOf(cylinder.getCenter().getY()));
+            zField.setText(String.valueOf(cylinder.getCenter().getZ()));
+            rField.setText(String.valueOf(cylinder.getColor().getR()));
+            gField.setText(String.valueOf(cylinder.getColor().getG()));
+            bField.setText(String.valueOf(cylinder.getColor().getB()));
+            radiusField.setText(String.valueOf(cylinder.getRadius()));
+            heightField.setText(String.valueOf(cylinder.getHeight()));
+        }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
@@ -61,11 +79,13 @@ public class CylinderFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        Cylinder cylinder = new Cylinder();
+        Cylinder cylinder = (Cylinder)object;
         cylinder.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         cylinder.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         cylinder.setRadius(getNum(radiusField));
         cylinder.setHeight(getNum(heightField));
-        getParent().getCurrentObject().addChild(cylinder);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(cylinder);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package ru.dansstuff.simpleopengl.objects.windows;
 
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.objects.OpenGLColor;
 import ru.dansstuff.simpleopengl.objects.Line;
 
@@ -40,7 +41,25 @@ public class LineFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public LineFrame() {
+        this(new Line());
+    }
+
+    public LineFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            Line line = (Line)o;
+            x1Field.setText(String.valueOf(line.getP1().getX()));
+            y1Field.setText(String.valueOf(line.getP1().getY()));
+            z1Field.setText(String.valueOf(line.getP1().getZ()));
+            x2Field.setText(String.valueOf(line.getP2().getX()));
+            y2Field.setText(String.valueOf(line.getP2().getY()));
+            z2Field.setText(String.valueOf(line.getP2().getZ()));
+            rField.setText(String.valueOf(line.getColor().getR()));
+            gField.setText(String.valueOf(line.getColor().getG()));
+            bField.setText(String.valueOf(line.getColor().getB()));
+        }
 
         x1Field.setColumns(5); y1Field.setColumns(5); z1Field.setColumns(5);
         x2Field.setColumns(5); y2Field.setColumns(5); z2Field.setColumns(5);
@@ -63,10 +82,12 @@ public class LineFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        Line line = new Line();
+        Line line = (Line)object;
         line.setP1(new Vec3(getNum(x1Field), getNum(y1Field), getNum(z1Field)));
         line.setP2(new Vec3(getNum(x2Field), getNum(y2Field), getNum(z2Field)));
         line.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
-        getParent().getCurrentObject().addChild(line);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(line);
+        }
     }
 }

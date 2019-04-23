@@ -2,6 +2,7 @@ package ru.dansstuff.simpleopengl.objects.windows;
 
 import ru.dansstuff.simpleopengl.math.Vec3;
 import ru.dansstuff.simpleopengl.objects.EmptyObject;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +22,19 @@ public class EmptyObjectFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public EmptyObjectFrame() {
+        this(new EmptyObject());
+    }
+
+    public EmptyObjectFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            EmptyObject box = (EmptyObject)o;
+            xField.setText(String.valueOf(box.getCenter().getX()));
+            yField.setText(String.valueOf(box.getCenter().getY()));
+            zField.setText(String.valueOf(box.getCenter().getZ()));
+        }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
 
@@ -40,8 +53,10 @@ public class EmptyObjectFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        EmptyObject emptyObject = new EmptyObject();
+        EmptyObject emptyObject = (EmptyObject)object;
         emptyObject.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
-        getParent().getCurrentObject().addChild(emptyObject);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(emptyObject);
+        }
     }
 }

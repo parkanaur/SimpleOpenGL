@@ -1,21 +1,28 @@
 package ru.dansstuff.simpleopengl.viewer.frames;
 
+import lombok.Getter;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.window.OpenGLTestFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 
 public class CurrentObjectSelectionFrame extends JFrame {
+    @Getter
     private OpenGLTestFrame parent;
+    private FrameCallbackAction action;
 
+    @Getter
     private JList<GLObject> objectJList;
+    @Getter
     private DefaultListModel<GLObject> list;
 
     private JButton okButton;
 
-    public CurrentObjectSelectionFrame(OpenGLTestFrame parent) {
+    public CurrentObjectSelectionFrame(OpenGLTestFrame parent, FrameCallbackAction action) {
         this.parent = parent;
+        this.action = action;
         setLayout(new FlowLayout());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -40,12 +47,8 @@ public class CurrentObjectSelectionFrame extends JFrame {
 
         okButton = new JButton("OK");
         okButton.addActionListener(e -> {
-            if (objectJList.isSelectionEmpty()) {
-                JOptionPane.showMessageDialog(this, "No object selected");
-                return;
-            }
-
-            parent.setCurrentObject(objectJList.getSelectedValue());
+            action.doAction(this);
+            CurrentObjectSelectionFrame.this.dispatchEvent(new WindowEvent(CurrentObjectSelectionFrame.this, WindowEvent.WINDOW_CLOSING));
         });
         add(okButton);
 

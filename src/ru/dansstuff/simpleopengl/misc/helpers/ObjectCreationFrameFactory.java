@@ -23,18 +23,15 @@ public class ObjectCreationFrameFactory {
             ex.printStackTrace();
         }
     }
-    public static JFrame getFrame(Class clazz, OpenGLTestFrame parent) {
+    public static JFrame getFrame(Class clazz, OpenGLTestFrame parent, boolean creatingObject, GLObject o) {
         TypeBaseFrame frame;
         try {
-            frame = (TypeBaseFrame)frameMap.get(clazz).getConstructor().newInstance();
+            frame = (TypeBaseFrame)(frameMap.get(clazz).getDeclaredConstructor(GLObject.class).newInstance(o));
+            frame.setCreatingObject(creatingObject);
         }
         catch (Exception ex) {
-            frame = new TypeBaseFrame() {
-                @Override
-                protected void createObject() {
-
-                }
-            };
+            ex.printStackTrace();
+            return null;
         }
 
         frame.setParent(parent);

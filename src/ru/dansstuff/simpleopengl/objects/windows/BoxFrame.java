@@ -35,7 +35,23 @@ public class BoxFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public BoxFrame() {
+        this(new Box());
+    }
+
+    public BoxFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            Box box = (Box)o;
+            xField.setText(String.valueOf(box.getCenter().getX()));
+            yField.setText(String.valueOf(box.getCenter().getY()));
+            zField.setText(String.valueOf(box.getCenter().getZ()));
+            rField.setText(String.valueOf(box.getColor().getR()));
+            gField.setText(String.valueOf(box.getColor().getG()));
+            bField.setText(String.valueOf(box.getColor().getB()));
+            lenField.setText(String.valueOf(box.getLength()));
+        }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         rField.setColumns(5); gField.setColumns(5); bField.setColumns(5);
@@ -58,10 +74,12 @@ public class BoxFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        Box box = new Box();
+        Box box = (Box)object;
         box.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         box.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         box.setLength(getNum(lenField));
-        getParent().getCurrentObject().addChild(box);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(box);
+        }
     }
 }

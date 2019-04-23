@@ -8,6 +8,9 @@ import ru.dansstuff.simpleopengl.misc.helpers.SceneFileHelper;
 import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.viewer.GLViewerCanvas;
 import ru.dansstuff.simpleopengl.viewer.frames.CurrentObjectSelectionFrame;
+import ru.dansstuff.simpleopengl.viewer.frames.EditSelectedObjectAction;
+import ru.dansstuff.simpleopengl.viewer.frames.FrameCallbackAction;
+import ru.dansstuff.simpleopengl.viewer.frames.SelectCurrentObjectAction;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -173,7 +176,13 @@ public class OpenGLTestFrame
         for (Class clazz : GLObject.getObjectTypes()) {
             JMenuItem typeItem = new JMenuItem(clazz.getSimpleName());
             typeItem.addActionListener(e -> {
-                JFrame typeCreationFrame = ObjectCreationFrameFactory.getFrame(clazz, this);
+                try {
+                    GLObject newObject = (GLObject)clazz.getConstructor().newInstance();
+                    JFrame typeCreationFrame = ObjectCreationFrameFactory.getFrame(clazz, this, true, newObject);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             });
 
             objectAddingMenu.add(typeItem);
@@ -181,11 +190,13 @@ public class OpenGLTestFrame
 
         JMenuItem currentObjectSelectionItem = new JMenuItem("Select current object...");
         currentObjectSelectionItem.addActionListener(e -> {
-            JFrame frame = new CurrentObjectSelectionFrame(this);
+            JFrame frame = new CurrentObjectSelectionFrame(this, new SelectCurrentObjectAction());
         });
 
         JMenuItem objectEditingItem = new JMenuItem("Edit object...");
-
+        objectEditingItem.addActionListener(e -> {
+            JFrame frame = new CurrentObjectSelectionFrame(this, new EditSelectedObjectAction());
+        });
 
         objectHandlingMenu.add(objectAddingMenu);
         objectHandlingMenu.addSeparator();

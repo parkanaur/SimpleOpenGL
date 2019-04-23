@@ -1,6 +1,7 @@
 package ru.dansstuff.simpleopengl.objects.windows;
 
 import ru.dansstuff.simpleopengl.math.Vec3;
+import ru.dansstuff.simpleopengl.objects.GLObject;
 import ru.dansstuff.simpleopengl.objects.OpenGLColor;
 import ru.dansstuff.simpleopengl.objects.Sphere;
 
@@ -37,7 +38,23 @@ public class SphereFrame extends TypeBaseFrame {
     private JButton okButton = new JButton("OK");
 
     public SphereFrame() {
+        this(new Sphere());
+    }
+
+    public SphereFrame(GLObject o) {
+        this.object = o;
         setLayout(new FlowLayout());
+
+        if (!creatingObject) {
+            Sphere sphere = (Sphere)o;
+            xField.setText(String.valueOf(sphere.getCenter().getX()));
+            yField.setText(String.valueOf(sphere.getCenter().getY()));
+            zField.setText(String.valueOf(sphere.getCenter().getZ()));
+            rField.setText(String.valueOf(sphere.getColor().getR()));
+            gField.setText(String.valueOf(sphere.getColor().getG()));
+            bField.setText(String.valueOf(sphere.getColor().getB()));
+            radiusField.setText(String.valueOf(sphere.getRadius()));
+        }
 
         xField.setColumns(5); yField.setColumns(5); zField.setColumns(5);
         radiusField.setColumns(5);
@@ -63,11 +80,13 @@ public class SphereFrame extends TypeBaseFrame {
     }
 
     protected void createObject() {
-        Sphere sphere = new Sphere();
+        Sphere sphere = (Sphere)object;
         sphere.setCenter(new Vec3(getNum(xField), getNum(yField), getNum(zField)));
         sphere.setColor(new OpenGLColor(getNum(rField), getNum(gField), getNum(bField)));
         sphere.setRadius(getNum(radiusField));
         sphere.setTextureFile(tField.getText().replace('\\', '/'));
-        getParent().getCurrentObject().addChild(sphere);
+        if (creatingObject) {
+            getParent().getCurrentObject().addChild(sphere);
+        }
     }
 }
