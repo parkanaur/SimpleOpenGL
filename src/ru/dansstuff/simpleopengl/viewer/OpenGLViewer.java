@@ -261,7 +261,7 @@ public class OpenGLViewer implements GLEventListener, Serializable {
 
     public void clear() {
         root.clear();
-        root = null;
+        root = new EmptyObject();
         //cam = new Vec3(0, 0, -1);
         center = new Vec3(0 ,0, -6);
         rotn = new Vec3(15, 45, 0);
