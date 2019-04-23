@@ -151,9 +151,14 @@ public class OpenGLTestFrame
             canvas.getViewer().setDrawDebugText(!canvas.getViewer().isDrawDebugText());
         });
 
+        JMenuItem clearSceneItem = new JMenuItem("Clear scene");
+        clearSceneItem.addActionListener(e -> canvas.getViewer().clear());
+        add(clearSceneItem);
+
         sceneHandlingMenu.add(enableSceneItem);
         sceneHandlingMenu.add(enableAxisItem);
         sceneHandlingMenu.add(enableDebugTextItem);
+        sceneHandlingMenu.add(clearSceneItem);
 
         return sceneHandlingMenu;
     }
