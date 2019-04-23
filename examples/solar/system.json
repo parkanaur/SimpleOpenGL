@@ -1,0 +1,61 @@
+{
+  "type": "EmptyObject",
+  "center": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "id": "",
+  "children": [
+    {
+      "type": "Sphere",
+      "textureFile": "C:\\Users\\Даниил\\Desktop\\examples\\solar\\img\\sun.jpg",
+      "center": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "radius": 4,
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+      },
+      "id": "",
+      "children": []
+    },
+    {
+      "type": "Sphere",
+      "textureFile": "C:\\Users\\Даниил\\Desktop\\examples\\solar\\img\\earth.jpg",
+      "center": {
+        "x": 9,
+        "y": 0,
+        "z": 1
+      },
+      "radius": 1,
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+      },
+      "id": "",
+      "children": []
+    },
+    {"type": "Sphere",
+      "textureFile": "C:\\Users\\Даниил\\Desktop\\examples\\solar\\img\\mars.jpg",
+      "center": {
+        "x": 12,
+        "y": 0,
+        "z": 6
+      },
+      "radius": 1,
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+      },
+      "id": "",
+      "children": []
+    }
+  ]
+}
