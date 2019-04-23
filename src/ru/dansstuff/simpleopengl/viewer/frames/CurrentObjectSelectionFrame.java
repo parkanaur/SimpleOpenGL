@@ -26,7 +26,7 @@ public class CurrentObjectSelectionFrame extends JFrame {
         setLayout(new FlowLayout());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = parent.getWidth() / 4;
+        int width = parent.getWidth() / 2;
         int height = parent.getHeight() / 2;
         setBounds((screenSize.width - width) / 2,
                 (screenSize.height - height) / 2,

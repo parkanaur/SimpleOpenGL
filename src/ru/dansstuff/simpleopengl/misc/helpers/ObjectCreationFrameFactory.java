@@ -59,8 +59,8 @@ public class ObjectCreationFrameFactory {
         frame.add(okBtn);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = parent.getWidth() / 4;
-        int height = parent.getHeight() / 3;
+        int width = parent.getWidth() / 2;
+        int height = parent.getHeight() / 2;
         frame.setBounds((screenSize.width - width) / 2,
                 (screenSize.height - height) / 2,
                 width, height);
@@ -83,8 +83,8 @@ public class ObjectCreationFrameFactory {
         frame.setTitle(clazz.getSimpleName());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = parent.getWidth() / 4;
-        int height = parent.getHeight() / 3;
+        int width = parent.getWidth() / 2;
+        int height = parent.getHeight() / 2;
         frame.setBounds((screenSize.width - width) / 2,
                 (screenSize.height - height) / 2,
                 width, height);
